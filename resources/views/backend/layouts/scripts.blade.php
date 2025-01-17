@@ -1,0 +1,7 @@
+<script src="{{ asset('assets/frontend/vendors/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/backend/js/scripts.js') }}"></script>
+<script src="{{ asset('assets/backend/js/simple-datatables.min.js') }}" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/backend/js/datatables-simple-demo.js') }}"></script>
+
+@yield('scripts')
+@stack('scripts')

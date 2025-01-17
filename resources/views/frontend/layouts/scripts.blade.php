@@ -1,5 +1,4 @@
   <!-- Vendor JS Files -->
-  {{-- <script src="{{ asset('assets/frontend/vendors/php-email-form/validate.js') }}"></script> --}}
   <script src="{{ asset('assets/frontend/vendors/aos/aos.js') }}"></script>
   <script src="{{ asset('assets/frontend/vendors/glightbox/js/glightbox.min.js') }}"></script>
   <script src="{{ asset('assets/frontend/vendors/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
