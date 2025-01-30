@@ -1,0 +1,38 @@
+div.dataTables_wrapper div.dataTables_length select {
+    width: 75px !important;
+}
+div.dataTables_wrapper .selected {
+    background-color: antiquewhite !important;
+}
+
+/*  paginate */
+.dataTables_wrapper .dataTables_paginate {
+    margin-left: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding-top: 0 !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 0 !important;
+    color: inherit !important;
+    background: 0 !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    background: 0 !important;
+    color: inherit !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+@media only screen and (max-width: 575px) {
+    .paginate_button.previous .page-link,
+    .paginate_button.next .page-link {
+        border: none !important;
+        padding: 0;
+    }
+}
+.dataTables_processing {
+    background: #eb1d74 !important;
+    color: #fff !important;
+}

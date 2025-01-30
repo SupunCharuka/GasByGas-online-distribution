@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'has_any_admin_role' => \App\Http\Middleware\EnsureUserHasAnyAdministratorRole::class,
+            'check_suspended' => \App\Http\Middleware\CheckSuspended::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
