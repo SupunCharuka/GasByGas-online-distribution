@@ -11236,3 +11236,155 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+/**=====================
+     21. Select 2 CSS Start
+==========================**/
+.select2-dropdown {
+  z-index: 8; }
+
+.add-post form .m-checkbox-inline label {
+  margin-bottom: 0; }
+
+.add-post form .form-control {
+  border: 1px solid #eff0f1; }
+
+.add-post form .col-form-label {
+  padding-bottom: 0;
+  padding-top: 0; }
+  .add-post form .col-form-label .select2-container--default {
+    margin-top: 10px; }
+    .add-post form .col-form-label .select2-container--default .selection .select2-selection .select2-search__field {
+      padding: 2px; }
+    .add-post form .col-form-label .select2-container--default .select2-selection--multiple {
+      border: 1px solid #eff0f1; }
+      .add-post form .col-form-label .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+        margin-top: 6px !important; }
+
+.add-post .dropzone {
+  margin-bottom: 30px; }
+
+.select2-drpdwn .select2-selection {
+  border-radius: 0 !important;
+  border-color: #f6f7fb !important;
+  height: 40px !important;
+  padding: 5px; }
+
+.select2-drpdwn .form-select {
+  border-radius: 5px; }
+
+.select2-drpdwn .form-control-primary {
+  border-color: #4466f2;
+  color: #4466f2; }
+
+.select2-drpdwn .form-control-secondary {
+  border-color: #1ea6ec;
+  color: #1ea6ec; }
+
+.select2-drpdwn .form-control-success {
+  border-color: #22af47;
+  color: #22af47; }
+
+.select2-drpdwn .form-control-info {
+  border-color: #007bff;
+  color: #007bff; }
+
+.select2-drpdwn .form-control-warning {
+  border-color: #ff9f40;
+  color: #ff9f40; }
+
+.select2-drpdwn .form-control-danger {
+  border-color: #ff5370;
+  color: #ff5370; }
+
+.select2-drpdwn .form-control-inverse {
+  border-color: #2a3142;
+  color: #2a3142; }
+
+.select2-drpdwn .form-control-primary-fill {
+  background-color: #4466f2;
+  color: #fff; }
+
+.select2-drpdwn .form-control-secondary-fill {
+  background-color: #1ea6ec;
+  color: #fff; }
+
+.select2-drpdwn .form-control-success-fill {
+  background-color: #22af47;
+  color: #fff; }
+
+.select2-drpdwn .form-control-info-fill {
+  background-color: #007bff;
+  color: #fff; }
+
+.select2-drpdwn .form-control-warning-fill {
+  background-color: #ff9f40;
+  color: #fff; }
+
+.select2-drpdwn .form-control-danger-fill {
+  background-color: #ff5370;
+  color: #fff; }
+
+.select2-drpdwn .form-control-inverse-fill {
+  background-color: #2a3142;
+  color: #fff; }
+
+.selection .select2-selection {
+  font-family: work-Sans, sans-serif;
+  border-radius: 5px !important; }
+  .selection .select2-selection .select2-search__field {
+    margin-top: 0;
+    padding: 3px; }
+
+.select2-container {
+  width: 100% !important; }
+
+.select2-container--classic .select2-selection--multiple .select2-selection__choice {
+  padding: 2px 6px !important;
+  margin-top: 0 !important;
+  background-color: #4466f2 !important;
+  border-color: #143fef !important;
+  color: #fff;
+  margin-right: 8px !important; }
+
+.select2-container--classic .select2-selection--multiple .select2-selection__choice__remove {
+  color: #fff !important;
+  float: right;
+  margin-left: 0.5rem; }
+
+.select2-container--classic .select2-results__option--highlighted[aria-selected] {
+  background-color: #e0e0e0 !important;
+  color: #424242 !important; }
+
+.select2-container--classic .select2-results__options .select2-results__option[aria-selected=true] {
+  background-color: #4466f2 !important;
+  color: #fff !important; }
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 7px !important;
+  right: 10px !important; }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  padding: 2px 6px !important;
+  margin-top: 0 !important;
+  background-color: #4466f2 !important;
+  border-color: #143fef !important;
+  color: #fff;
+  margin-right: 8px !important; }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #fff !important;
+  float: right;
+  margin-left: 0.5rem; }
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #e0e0e0 !important;
+  color: #424242 !important; }
+
+.select2-container--default .select2-results__options .select2-results__option[aria-selected=true] {
+  background-color: #4466f2 !important;
+  color: #fff !important; }
+
+/**=====================
+     21. Select 2 CSS Ends
+==========================**/

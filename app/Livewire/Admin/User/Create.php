@@ -82,7 +82,6 @@ class Create extends Component
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
                 'phone' => $input['phone'],
-               
             ]), function (User $user) {
                 $user->roles()->sync($this->role_id);
             });
