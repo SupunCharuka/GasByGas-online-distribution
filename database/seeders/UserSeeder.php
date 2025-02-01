@@ -32,6 +32,15 @@ class UserSeeder extends Seeder
                     'updated_at' => now(),
                     'password' => bcrypt('password'),
                 ],
+
+                //Outlet-manager 
+                [
+                    'name' => 'outlet-manager',
+                    'email' => 'outlet-manager@gmail.com',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'password' => bcrypt('password'),
+                ],
              
             ]
         );

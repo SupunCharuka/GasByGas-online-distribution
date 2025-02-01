@@ -13,6 +13,23 @@
                 <div class="px-4 py-4 bg-white sm:p-6">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-4">
+                            <x-label for="role_id" value="{{ __('Assign Role') }}" />
+                            <select wire:model.lazy="form.role_id" id="role" type="text"
+                                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm form-control">
+                                <option selected="" value="">Select role name</option>
+                                @foreach ($role->all() as $key => $role)
+                                  
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                   
+                                @endforeach
+                            </select>
+                            @error('form.role_id')
+                                <p class="text-sm text-red-600">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                        <div class="col-span-6 sm:col-span-4">
                             <x-label for="name" value="{{ __('Name') }}" />
                             <x-input wire:model.lazy="form.name" id="name" type="text"
                                 class="mt-1 block w-full" />
@@ -46,8 +63,35 @@
                                 </p>
                             @enderror
                         </div>
+                        @if ($form['role_id'] && Spatie\Permission\Models\Role::find($form['role_id'])->name === 'outlet-manager')
+                            <!-- Outlet Selection -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <x-label for="outlet_id" value="{{ __('Assign Outlet') }}" />
+                                <select wire:model.lazy="form.outlet_id" id="outlet_id"
+                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm form-control">
+                                    <option value="">Select Outlet</option>
+                                    @foreach ($listForFields['outlets'] as $id => $name)
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('form.outlet_id')
+                                    <p class="text-sm text-red-600">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
 
-                        
+                            @if ($selectedOutletDistrict)
+                                <div class="col-span-6 sm:col-span-4">
+                                    <x-label value="{{ __('Outlet District') }}" />
+                                    <div class="mt-1 p-2 bg-gray-100 rounded-md">
+                                        {{ $selectedOutletDistrict }}
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
+
+
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="password" value="{{ __('Password') }}" />
                             <x-input wire:model.lazy="form.password" id="password" type="password"
@@ -69,23 +113,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-span-6 sm:col-span-4">
-                            <x-label for="role_id" value="{{ __('Assign Role') }}" />
-                            <select wire:model.lazy="form.role_id" id="role" type="text"
-                                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm form-control">
-                                <option selected="" value="">Select role name</option>
-                                @foreach ($role->all() as $key => $role)
-                                    @unless ($role->name === 'member')
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                    @endunless
-                                @endforeach
-                            </select>
-                            @error('form.role_id')
-                                <p class="text-sm text-red-600">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
+
 
                     </div>
                 </div>
