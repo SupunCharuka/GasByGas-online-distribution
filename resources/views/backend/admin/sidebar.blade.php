@@ -36,6 +36,13 @@
                     </a>
                 @endcan
 
+                @can('outlet.manage')
+                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.outlet') ? 'active' : '' }}" href="{{ route('admin.outlet') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
+                        Manage Outlets
+                    </a>
+                @endcan
+
             </div>
         </div>
 
