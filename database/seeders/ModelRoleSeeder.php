@@ -28,6 +28,13 @@ class ModelRoleSeeder extends Seeder
                     'model_id' => '2',
                     'model_type' => 'App\Models\User',
                 ],
+
+                 //Outlet-manager
+                 [
+                    'role_id' => '3',
+                    'model_id' => '3',
+                    'model_type' => 'App\Models\User',
+                ],
             ]
         );
     }

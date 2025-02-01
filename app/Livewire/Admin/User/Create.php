@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\User;
 
 use App\Actions\Fortify\PasswordValidationRules;
+use App\Models\Outlet;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,9 @@ class Create extends Component
     public $role_id = [];
     public array $listForFields = [];
     public string $phone_iso = 'lk';
+    public $outlet_id;
+    public Outlet $outlet;
+    public $selectedOutletDistrict = null;
 
     public $form = [
         'name'                  => '',
@@ -24,18 +28,25 @@ class Create extends Component
         'password'              => '',
         'role_id'              => '',
         'phone'              => '',
-       
+        'outlet_id'             => '',
+
     ];
     protected function rules(): array
     {
-        return [
+        $rules =  [
             'form.name'    => ['required', 'string', 'max:255'],
             'form.email'     =>  ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'form.password' => $this->passwordRules(),
             'form.role_id' => ['required', 'integer', 'exists:Spatie\Permission\Models\Role,id'],
             'form.phone' => ['required', 'string', 'unique:users,phone', 'phone:' . $this->phone_iso],
-
+            'form.outlet_id' => ['required', 'integer', 'exists:outlets,id'],
         ];
+
+        if ($this->form['role_id'] && Role::find($this->form['role_id'])->name === 'outlet-manager') {
+            $rules['form.outlet_id'] = ['required', 'integer', 'exists:outlets,id'];
+        }
+
+        return $rules;
     }
     protected $validationAttributes = [
         'form.name' => 'name',
@@ -43,14 +54,15 @@ class Create extends Component
         'form.password' => 'password',
         'form.phone' => 'phone number',
         'form.role_id' => 'role',
-    
+        'form.outlet_id' => 'outlet',
     ];
 
-    
+
     protected $messages = [
         'form.email.unique' => 'You have already added this email!',
         'form.phone.unique' => 'You have already added this phone number!',
         'form.phone' => 'Please enter a valid phone number.',
+        'form.outlet_id.required' => 'The outlet field is required for outlet managers.',
     ];
 
 
@@ -63,18 +75,25 @@ class Create extends Component
         $this->form['password_confirmation'] = '';
         $this->form['phone'] = '';
         $this->form['role_id'] = '';
-
+        $this->form['outlet_id'] = '';
+        $this->selectedOutletDistrict = null;
     }
 
-    public function updated()
+    public function updated($propertyName)
     {
-        $this->validate();
+        
+        $this->validateOnly($propertyName);
+        if ($propertyName === 'form.outlet_id') {
+            $this->selectedOutletDistrict = Outlet::find($this->form['outlet_id'])->district ?? null;
+        }
     }
 
     public function save()
     {
         $this->validate();
         $input = $this->form;
+
+      
         $this->role_id = ['role_id' => $input['role_id']];
         $this->user = DB::transaction(function () use ($input) {
             return tap(User::create([
@@ -82,6 +101,7 @@ class Create extends Component
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
                 'phone' => $input['phone'],
+                'outlet_id' => $input['outlet_id'] ?? null,
             ]), function (User $user) {
                 $user->roles()->sync($this->role_id);
             });
@@ -91,13 +111,16 @@ class Create extends Component
         return redirect()->route('admin.manage-user');
     }
 
-   
+
 
     public function mount()
     {
         $this->user = new User();
         $this->role = new Role();
-      
+        $this->outlet = new Outlet();
+
+       
+        $this->listForFields['outlets'] = Outlet::pluck('name', 'id')->toArray();
     }
     public function render()
     {
