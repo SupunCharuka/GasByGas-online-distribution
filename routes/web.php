@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ManageUserController;
+use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\PublicController;
@@ -35,6 +36,11 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
     Route::delete('manage-user/{user}', [ManageUserController::class, 'destroy']);
     Route::get('manage-user/{user}/rest-password', [ManageUserController::class, 'resetPassword'])->name('manage-user.resetPassword');
     Route::post('manage-user/{user}/suspend', [ManageUserController::class, 'suspendUser']);
+
+    //outlet
+    Route::get('outlet', [OutletController::class, 'index'])->name('outlet');
+    Route::get('outlet/{outlet}/edit', [OutletController::class, 'edit'])->name('outlet.edit');
+    Route::delete('outlet/{outlet}', [OutletController::class, 'destroy']);
 });
 
 

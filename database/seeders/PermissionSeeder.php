@@ -32,6 +32,14 @@ class PermissionSeeder extends Seeder
             ['name' => 'manage-user.view', 'guard_name' => 'web'],
             ['name' => 'manage-user.update', 'guard_name' => 'web'],
             ['name' => 'manage-user.delete', 'guard_name' => 'web'],
+            ['name' => 'manage-user.suspend', 'guard_name' => 'web'],
+            ['name' => 'manage-user.reset-password', 'guard_name' => 'web'],
+
+            ['name' => 'outlet.manage', 'guard_name' => 'web'],
+            ['name' => 'outlet.create', 'guard_name' => 'web'],
+            ['name' => 'outlet.view', 'guard_name' => 'web'],
+            ['name' => 'outlet.update', 'guard_name' => 'web'],
+            ['name' => 'outlet.delete', 'guard_name' => 'web'],
 
         ];
 
