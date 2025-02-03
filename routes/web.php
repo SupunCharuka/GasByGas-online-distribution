@@ -47,4 +47,7 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
 //USER
 Route::group(["prefix" => "user", 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'check_suspended', 'role:user'], "as" => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    
+    Route::get('gas-requests', [UserDashboardController::class, 'gasRequests'])->name('gas-requests');
+    Route::post('gas-request/{gasRequest}/cancel', [UserDashboardController::class, 'cancelRequest'])->name('gas-requests.cancel');
 });

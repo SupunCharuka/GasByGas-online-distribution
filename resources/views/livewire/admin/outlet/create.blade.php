@@ -23,17 +23,16 @@
                             @enderror
                         </div>
 
-                        <!-- District -->
-                       <!-- District Dropdown -->
+           
                        <div class="col-span-6 sm:col-span-4">
-                        <x-label for="district" value="{{ __('District') }}" />
-                        <select wire:model="district" id="district" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <x-label for="district_id" value="{{ __('District') }}" />
+                        <select wire:model="district_id" id="district_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             <option value="">Select District</option>
                             @foreach($districts as $district)
-                                <option value="{{ $district }}">{{ $district }}</option>
+                                <option value="{{ $district->id }}">{{ $district->name }}</option>
                             @endforeach
                         </select>
-                        @error('district')
+                        @error('district_id')
                             <p class="text-sm text-red-600">
                                 {{ $message }}
                             </p>

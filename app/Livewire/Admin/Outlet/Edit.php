@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Outlet;
 
+use App\Models\District;
 use App\Models\Outlet;
 use Livewire\Component;
 
@@ -9,43 +10,15 @@ class Edit extends Component
 {
     public $outletId;
     public $name;
-    public $district;
+    public $district_id;
     public $address;
     public $contact_number;
     public $stock;
 
-    // Hardcoded list of Sri Lanka districts
-    public $districts = [
-        'Ampara',
-        'Anuradhapura',
-        'Badulla',
-        'Batticaloa',
-        'Colombo',
-        'Galle',
-        'Gampaha',
-        'Hambantota',
-        'Jaffna',
-        'Kalutara',
-        'Kandy',
-        'Kegalle',
-        'Kilinochchi',
-        'Kurunegala',
-        'Mannar',
-        'Matale',
-        'Matara',
-        'Moneragala',
-        'Mullaitivu',
-        'Nuwara Eliya',
-        'Polonnaruwa',
-        'Puttalam',
-        'Ratnapura',
-        'Trincomalee',
-        'Vavuniya',
-    ];
 
     protected $rules = [
         'name' => 'required|string|max:255',
-        'district' => 'required|string|in:' . 'Ampara,Anuradhapura,Badulla,Batticaloa,Colombo,Galle,Gampaha,Hambantota,Jaffna,Kalutara,Kandy,Kegalle,Kilinochchi,Kurunegala,Mannar,Matale,Matara,Moneragala,Mullaitivu,Nuwara Eliya,Polonnaruwa,Puttalam,Ratnapura,Trincomalee,Vavuniya',
+        'district_id' => 'required|exists:districts,id',
         'address' => 'required|string|max:255',
         'contact_number' => 'required|string|max:15',
         'stock' => 'required|integer|min:0',
@@ -62,7 +35,7 @@ class Edit extends Component
     public function mount(Outlet $outlet) {
         $this->outletId = $outlet->id;
         $this->name = $outlet->name;
-        $this->district = $outlet->district;
+        $this->district_id = $outlet->district_id;
         $this->address = $outlet->address;
         $this->contact_number = $outlet->contact_number;
         $this->stock = $outlet->stock;
@@ -76,7 +49,7 @@ class Edit extends Component
         $outlet = Outlet::findOrFail($this->outletId);
         $outlet->update([
             'name' => $this->name,
-            'district' => $this->district,
+            'district_id' => $this->district_id,
             'address' => $this->address,
             'contact_number' => $this->contact_number,
             'stock' => $this->stock,
@@ -89,6 +62,8 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.admin.outlet.edit');
+        return view('livewire.admin.outlet.edit', [
+            'districts' => District::all(), // Fetch districts dynamically
+        ]);
     }
 }

@@ -25,16 +25,18 @@
 
                         <!-- District Dropdown -->
                         <div class="col-span-6 sm:col-span-4">
-                            <x-label for="district" value="{{ __('District') }}" />
-                            <select wire:model="district" id="district" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <x-label for="district_id" value="{{ __('District') }}" />
+                            <select wire:model="district_id" id="district_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <option value="">Select District</option>
-                                @foreach($districts as $district)
-                                    <option value="{{ $district }}" {{ $district === $this->district ? 'selected' : '' }}>
-                                        {{ $district }}
+                                @foreach ($districts as $district)
+                                    <option value="{{ $district->id }}"
+                                        {{ $district->id == $district_id ? 'selected' : '' }}>
+                                        {{ $district->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('district')
+                            @error('district_id')
                                 <p class="text-sm text-red-600">
                                     {{ $message }}
                                 </p>
@@ -55,7 +57,8 @@
                         <!-- Contact Number -->
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="contact_number" value="{{ __('Contact Number') }}" />
-                            <x-input wire:model="contact_number" id="contact_number" type="text" class="mt-1 block w-full" />
+                            <x-input wire:model="contact_number" id="contact_number" type="text"
+                                class="mt-1 block w-full" />
                             @error('contact_number')
                                 <p class="text-sm text-red-600">
                                     {{ $message }}
@@ -65,7 +68,8 @@
 
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="stock" value="{{ __('Stock') }}" />
-                            <x-input wire:model="stock" id="stock" type="number" class="mt-1 block w-full" min="0" />
+                            <x-input wire:model="stock" id="stock" type="number" class="mt-1 block w-full"
+                                min="0" />
                             @error('stock')
                                 <p class="text-sm text-red-600">
                                     {{ $message }}
@@ -74,7 +78,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6 sm:rounded-bl-md sm:rounded-br-md">
+                <div
+                    class="flex items-center justify-end px-4 py-3 text-right sm:px-6 sm:rounded-bl-md sm:rounded-br-md">
                     <x-button wire:loading.attr="disabled">
                         {{ __('Update') }}
                     </x-button>

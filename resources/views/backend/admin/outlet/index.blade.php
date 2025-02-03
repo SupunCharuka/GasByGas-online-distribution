@@ -48,7 +48,7 @@
                                             <tr id="outlet-record-{{ $outlet->id }}">
                                                 <td>{{ $outlet->id }}</td>
                                                 <td>{{ $outlet->name }}</td>
-                                                <td>{{ $outlet->district }}</td>
+                                                <td>{{ $outlet->district->name }}</td>
                                                 <td>{{ $outlet->address }}</td>
                                                 <td>{{ $outlet->contact_number }}</td>
                                                 <td>{{ $outlet->stock }}</td>

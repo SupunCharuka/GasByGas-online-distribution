@@ -81,7 +81,7 @@ class Edit extends Component
     
         if ($field === 'form.outlet_id') {
             $outlet = Outlet::find($this->form['outlet_id']);
-            $this->selectedOutletDistrict = $outlet->district ?? null;
+            $this->selectedOutletDistrict = $outlet->district->name ?? null;
         }
        
     }
@@ -130,7 +130,7 @@ class Edit extends Component
 
         if ($this->form['outlet_id']) {
             $outlet = Outlet::find($this->form['outlet_id']);
-            $this->selectedOutletDistrict = $outlet->district ?? null;
+            $this->selectedOutletDistrict = $outlet->district->name ?? null;
         }
     }
     public function render()
