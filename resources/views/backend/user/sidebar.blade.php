@@ -7,7 +7,12 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
-                
+               
+                <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'user.gas-requests') ? 'active' : '' }}" href="{{ route('user.gas-requests') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-upload"></i></div>
+                    Gas Requests
+                </a>
+          
             </div>
         </div>
        

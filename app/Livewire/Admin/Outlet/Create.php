@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Outlet;
 
+use App\Models\District;
 use App\Models\Outlet;
 use Livewire\Component;
 
@@ -9,42 +10,15 @@ class Create extends Component
 {
 
     public $name;
-    public $district;
+    public $district_id;
     public $address;
     public $contact_number;
     public $stock;
-
-    public $districts = [
-        'Ampara',
-        'Anuradhapura',
-        'Badulla',
-        'Batticaloa',
-        'Colombo',
-        'Galle',
-        'Gampaha',
-        'Hambantota',
-        'Jaffna',
-        'Kalutara',
-        'Kandy',
-        'Kegalle',
-        'Kilinochchi',
-        'Kurunegala',
-        'Mannar',
-        'Matale',
-        'Matara',
-        'Moneragala',
-        'Mullaitivu',
-        'Nuwara Eliya',
-        'Polonnaruwa',
-        'Puttalam',
-        'Ratnapura',
-        'Trincomalee',
-        'Vavuniya',
-    ];
+    public $districts;
 
     protected $rules = [
         'name' => 'required|string|max:255',
-        'district' => 'required|string|in:' . 'Ampara,Anuradhapura,Badulla,Batticaloa,Colombo,Galle,Gampaha,Hambantota,Jaffna,Kalutara,Kandy,Kegalle,Kilinochchi,Kurunegala,Mannar,Matale,Matara,Moneragala,Mullaitivu,Nuwara Eliya,Polonnaruwa,Puttalam,Ratnapura,Trincomalee,Vavuniya',
+        'district_id' => 'required|exists:districts,id',
         'address' => 'required|string|max:255',
         'contact_number' => 'required|string|max:15',
         'stock' => 'required|integer|min:0',
@@ -52,7 +26,7 @@ class Create extends Component
 
     protected $validationAttributes = [
         'name.required' => 'The outlet name is required.',
-        'district.required' => 'The district is required.',
+        'district_id.required' => 'The district is required.',
         'address.required' => 'The address is required.',
         'contact_number.required' => 'The contact number is required.',
         'stock.required' => 'The stock is required.',
@@ -63,26 +37,39 @@ class Create extends Component
     {
         $this->validate();
 
-       $outlet = Outlet::create([
+        $outlet = Outlet::create([
             'name' => $this->name,
-            'district' => $this->district,
+            'district_id' => $this->district_id,
             'address' => $this->address,
             'contact_number' => $this->contact_number,
             'stock' => $this->stock,
         ]);
-        $this->dispatch('outlet-created', outlet:  $outlet);
-        
-        $this->reset(['name', 'district', 'address', 'contact_number', 'stock']);
 
-    
+        $outlet->load('district');
+
+
+        $this->dispatch('outlet-created', outlet: [
+            'id' => $outlet->id,
+            'name' => $outlet->name,
+            'district' => $outlet->district->name, 
+            'address' => $outlet->address,
+            'contact_number' => $outlet->contact_number,
+            'stock' => $outlet->stock,
+        ]);
+
+        $this->reset(['name', 'district_id', 'address', 'contact_number', 'stock']);
+
+
         session()->flash('message', 'Outlet created successfully!');
     }
 
+    public function mount()
+    {
+        $this->districts = District::all();
+    }
 
     public function render()
     {
-        return view('livewire.admin.outlet.create', [
-            'districts' => $this->districts,
-        ]);
+        return view('livewire.admin.outlet.create');
     }
 }

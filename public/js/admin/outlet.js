@@ -3,6 +3,8 @@
         let outlet_table = $("#outlets").DataTable();
 
         Livewire.on('outlet-created', ({ outlet }) => {
+           
+            
             let action_edit = `<a class="btn btn-sm btn-primary"
                         href="${APP_URL}/admin/outlet/${outlet.id}/edit">
                         <i class="fa fa-pencil"></i>

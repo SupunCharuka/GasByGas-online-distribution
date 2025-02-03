@@ -90,7 +90,7 @@ class Create extends Component
         
         $this->validateOnly($propertyName);
         if ($propertyName === 'form.outlet_id') {
-            $this->selectedOutletDistrict = Outlet::find($this->form['outlet_id'])->district ?? null;
+            $this->selectedOutletDistrict = Outlet::find($this->form['outlet_id'])->district->name ?? null;
         }
     }
 
