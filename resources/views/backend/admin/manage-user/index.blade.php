@@ -37,7 +37,8 @@
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            {{-- <th>Phone Number</th> --}}
+                                            <th>NIC</th>
+                                            <th>Phone Number</th>
                                             <th>Current role</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
@@ -50,7 +51,8 @@
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            {{-- <th>Phone Number</th> --}}
+                                            <th>NIC</th>
+                                            <th>Phone Number</th>
                                             <th>Current role</th>
                                             <th class="text-center">Actions</th>
                                         </tr>

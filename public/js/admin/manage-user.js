@@ -13,11 +13,13 @@
                 { data: "id", name: 'id', searchable: true },
                 { data: "name", name: 'id', searchable: true },
                 { data: "email", name: 'email', searchable: true, orderable: false },
+                { data: "nic", name: 'nic', searchable: true, orderable: false },
+                { data: "phone", name: 'phone', searchable: true, orderable: false },
                 { data: "roles", searchable: false, orderable: false },
                 { data: "actions", searchable: false, orderable: false },
             ],
             columnDefs: [
-                { targets: 4, className: "text-center" },
+                { targets: 6, className: "text-center" },
             ],
         });
 

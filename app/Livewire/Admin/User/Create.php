@@ -28,6 +28,7 @@ class Create extends Component
         'password'              => '',
         'role_id'              => '',
         'phone'              => '',
+        'nic'              => '',
         'outlet_id'             => '',
 
     ];
@@ -36,6 +37,7 @@ class Create extends Component
         $rules =  [
             'form.name'    => ['required', 'string', 'max:255'],
             'form.email'     =>  ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'form.nic'     =>  ['required', 'string', 'nic', 'regex:/^[0-9]{9}[vVxX]$|^[0-9]{12}$/', 'unique:users,nic'],
             'form.password' => $this->passwordRules(),
             'form.role_id' => ['required', 'integer', 'exists:Spatie\Permission\Models\Role,id'],
             'form.phone' => ['required', 'string', 'unique:users,phone', 'phone:' . $this->phone_iso],
@@ -51,15 +53,18 @@ class Create extends Component
     protected $validationAttributes = [
         'form.name' => 'name',
         'form.email' => 'email',
+        'form.nic' => 'nic',
         'form.password' => 'password',
         'form.phone' => 'phone number',
         'form.role_id' => 'role',
         'form.outlet_id' => 'outlet',
+
     ];
 
 
     protected $messages = [
         'form.email.unique' => 'You have already added this email!',
+        'form.nic.unique' => 'You have already added this nic!',
         'form.phone.unique' => 'You have already added this phone number!',
         'form.phone' => 'Please enter a valid phone number.',
         'form.outlet_id.required' => 'The outlet field is required for outlet managers.',
@@ -71,6 +76,7 @@ class Create extends Component
 
         $this->form['name'] = '';
         $this->form['email'] = '';
+        $this->form['nic'] = '';
         $this->form['password'] = '';
         $this->form['password_confirmation'] = '';
         $this->form['phone'] = '';
@@ -99,6 +105,7 @@ class Create extends Component
             return tap(User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'nic' => $input['nic'],
                 'password' => Hash::make($input['password']),
                 'phone' => $input['phone'],
                 'outlet_id' => $input['outlet_id'] ?? null,
