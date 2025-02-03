@@ -61,6 +61,16 @@
                                 </p>
                             @enderror
                         </div>
+
+                        <div class="col-span-6 sm:col-span-4">
+                            <x-label for="stock" value="{{ __('Stock') }}" />
+                            <x-input wire:model="stock" id="stock" type="number" class="mt-1 block w-full" min="0" />
+                            @error('stock')
+                                <p class="text-sm text-red-600">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6 sm:rounded-bl-md sm:rounded-br-md">

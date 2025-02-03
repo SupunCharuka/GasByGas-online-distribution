@@ -12,6 +12,7 @@ class Edit extends Component
     public $district;
     public $address;
     public $contact_number;
+    public $stock;
 
     // Hardcoded list of Sri Lanka districts
     public $districts = [
@@ -47,6 +48,7 @@ class Edit extends Component
         'district' => 'required|string|in:' . 'Ampara,Anuradhapura,Badulla,Batticaloa,Colombo,Galle,Gampaha,Hambantota,Jaffna,Kalutara,Kandy,Kegalle,Kilinochchi,Kurunegala,Mannar,Matale,Matara,Moneragala,Mullaitivu,Nuwara Eliya,Polonnaruwa,Puttalam,Ratnapura,Trincomalee,Vavuniya',
         'address' => 'required|string|max:255',
         'contact_number' => 'required|string|max:15',
+        'stock' => 'required|integer|min:0',
     ];
 
     protected $validationAttributes = [
@@ -54,6 +56,7 @@ class Edit extends Component
         'district.required' => 'The district is required.',
         'address.required' => 'The address is required.',
         'contact_number.required' => 'The contact number is required.',
+        'stock.required' => 'The stock is required.',
     ];
     
     public function mount(Outlet $outlet) {
@@ -62,6 +65,8 @@ class Edit extends Component
         $this->district = $outlet->district;
         $this->address = $outlet->address;
         $this->contact_number = $outlet->contact_number;
+        $this->stock = $outlet->stock;
+        
     }
 
     
@@ -74,6 +79,7 @@ class Edit extends Component
             'district' => $this->district,
             'address' => $this->address,
             'contact_number' => $this->contact_number,
+            'stock' => $this->stock,
         ]);
 
         // Show success message

@@ -12,6 +12,7 @@ class Outlet extends Model
         'district',
         'address',
         'contact_number',
+        'stock',
     ];
     
     public function users(): HasMany

@@ -12,6 +12,7 @@ class Create extends Component
     public $district;
     public $address;
     public $contact_number;
+    public $stock;
 
     public $districts = [
         'Ampara',
@@ -46,6 +47,7 @@ class Create extends Component
         'district' => 'required|string|in:' . 'Ampara,Anuradhapura,Badulla,Batticaloa,Colombo,Galle,Gampaha,Hambantota,Jaffna,Kalutara,Kandy,Kegalle,Kilinochchi,Kurunegala,Mannar,Matale,Matara,Moneragala,Mullaitivu,Nuwara Eliya,Polonnaruwa,Puttalam,Ratnapura,Trincomalee,Vavuniya',
         'address' => 'required|string|max:255',
         'contact_number' => 'required|string|max:15',
+        'stock' => 'required|integer|min:0',
     ];
 
     protected $validationAttributes = [
@@ -53,6 +55,7 @@ class Create extends Component
         'district.required' => 'The district is required.',
         'address.required' => 'The address is required.',
         'contact_number.required' => 'The contact number is required.',
+        'stock.required' => 'The stock is required.',
     ];
 
 
@@ -65,10 +68,11 @@ class Create extends Component
             'district' => $this->district,
             'address' => $this->address,
             'contact_number' => $this->contact_number,
+            'stock' => $this->stock,
         ]);
         $this->dispatch('outlet-created', outlet:  $outlet);
         
-        $this->reset(['name', 'district', 'address', 'contact_number']);
+        $this->reset(['name', 'district', 'address', 'contact_number', 'stock']);
 
     
         session()->flash('message', 'Outlet created successfully!');

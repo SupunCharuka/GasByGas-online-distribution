@@ -39,6 +39,7 @@
                                             <th>District</th>
                                             <th>Address</th>
                                             <th>Contact Number</th>
+                                            <th>Stock</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -50,6 +51,7 @@
                                                 <td>{{ $outlet->district }}</td>
                                                 <td>{{ $outlet->address }}</td>
                                                 <td>{{ $outlet->contact_number }}</td>
+                                                <td>{{ $outlet->stock }}</td>
                                                 <td class="text-center">
                                                     @can('outlet.update')
                                                         <a class="btn btn-sm btn-primary"
@@ -76,6 +78,7 @@
                                             <th>District</th>
                                             <th>Address</th>
                                             <th>Contact Number</th>
+                                            <th>Stock</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </tfoot>
