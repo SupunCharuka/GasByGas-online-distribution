@@ -52,6 +52,17 @@
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
+                            <x-label for="nic" value="{{ __('NIC') }}" />
+                            <x-input wire:model.lazy="form.nic" id="nic" type="text"
+                                class="mt-1 block w-full" />
+                            @error('form.nic')
+                                <p class="text-sm text-red-600">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-4">
                             <x-label for="phone" value="{{ __('Phone Number') }}" />
                             <div wire:ignore>
                                 <x-input wire:model.lazy="form.phone" id="phone" type="text"

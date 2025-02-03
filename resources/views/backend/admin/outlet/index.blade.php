@@ -36,6 +36,9 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
+                                            <th>District</th>
+                                            <th>Address</th>
+                                            <th>Contact Number</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -44,6 +47,9 @@
                                             <tr id="outlet-record-{{ $outlet->id }}">
                                                 <td>{{ $outlet->id }}</td>
                                                 <td>{{ $outlet->name }}</td>
+                                                <td>{{ $outlet->district }}</td>
+                                                <td>{{ $outlet->address }}</td>
+                                                <td>{{ $outlet->contact_number }}</td>
                                                 <td class="text-center">
                                                     @can('outlet.update')
                                                         <a class="btn btn-sm btn-primary"
@@ -67,6 +73,9 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
+                                            <th>District</th>
+                                            <th>Address</th>
+                                            <th>Contact Number</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </tfoot>

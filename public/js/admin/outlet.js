@@ -16,12 +16,15 @@
                 .add([
                     outlet.id,
                     outlet.name,
+                    outlet.district,
+                    outlet.address,
+                    outlet.contact_number,
                     action_edit + " " + action_delete,
                 ])
                 .node();
 
             added_row.id = "outlet-record-" + outlet.id;
-            added_row.cells[2].classList.add("text-center");
+            added_row.cells[5].classList.add("text-center");
             outlet_table.draw();
             $("html, body").animate({ scrollTop: 0 }, 200);
         });

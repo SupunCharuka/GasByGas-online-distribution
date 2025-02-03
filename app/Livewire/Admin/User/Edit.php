@@ -24,6 +24,7 @@ class Edit extends Component
         'role_id'              => '',
         'phone'              => '',
         'outlet_id'             => null,
+        'nic'              => '',
     ];
 
     protected function rules(): array
@@ -31,6 +32,7 @@ class Edit extends Component
         $rules = [
             'form.name'    => ['required', 'string', 'max:255'],
             'form.email'     =>  ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->user->id)],
+            'form.nic' => ['required', 'string', 'regex:/^[0-9]{9}[vVxX]$|^[0-9]{12}$/', Rule::unique('users', 'nic')->ignore($this->user->id)],
             'form.role_id' => ['required', 'integer', 'exists:Spatie\Permission\Models\Role,id'],
             'form.phone' => ['required', 'string', Rule::unique('users', 'phone')->ignore($this->user->id), 'phone:' . $this->phone_iso],
 
@@ -49,11 +51,13 @@ class Edit extends Component
         'form.phone' => 'phone number',
         'form.role_id' => 'role',
         'form.outlet_id' => 'outlet',
+        'form.nic' => 'nic',
     ];
 
 
     protected $messages = [
         'form.email.unique' => 'You have already added this email!',
+        'form.nic.unique' => 'You have already added this nic!',
         'form.phone.unique' => 'You have already added this phone number!',
         'form.phone' => 'Please enter a valid phone number.',
     ];
@@ -90,6 +94,7 @@ class Edit extends Component
         $users = User::where('id', $this->user->id)->first();
         $users->name = $this->form['name'];
         $users->email = $this->form['email'];
+        $users->nic = $this->form['nic'];
         $users->phone = $this->form['phone'];
 
         $this->role_id = [$this->form['role_id']];;
@@ -113,6 +118,7 @@ class Edit extends Component
 
         $this->form['name'] = $user->name;
         $this->form['email'] = $user->email;
+        $this->form['nic'] = $user->nic;
         $this->form['phone'] = $user->phone;
         $this->form['role_id'] = $user->roles->first()->id ?? '';
         $this->form['outlet_id'] = $user->outlet_id;

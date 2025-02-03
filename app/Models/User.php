@@ -35,6 +35,7 @@ class User extends Authenticatable
         'phone',
         'suspended_at',
         'outlet_id',
+        'nic',
     ];
 
     /**
