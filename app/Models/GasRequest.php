@@ -16,7 +16,10 @@ class GasRequest extends Model
         'expected_pickup_date',
     ];
 
-  
+    protected $casts = [
+        'expected_pickup_date' => 'date', 
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
