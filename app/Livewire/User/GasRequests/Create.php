@@ -5,6 +5,7 @@ namespace App\Livewire\User\GasRequests;
 use App\Models\District;
 use App\Models\GasRequest;
 use App\Models\Outlet;
+use App\Models\Token;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -28,7 +29,7 @@ class Create extends Component
         'district_id' => 'district',
         'outlet_id' => 'outlet',
         'quantity' => 'quantity',
-        
+
     ];
 
     public function mount()
@@ -73,7 +74,7 @@ class Create extends Component
             'token' => Str::uuid(),
             'expected_pickup_date' => now()->addWeeks(2),
         ]);
-
+        $this->createToken($gasRequest);
         $this->dispatch('gasRequest-created', gasRequest: $gasRequest);
         $this->reset(['district_id', 'outlet_id', 'quantity']);
 
@@ -81,14 +82,33 @@ class Create extends Component
         Session::flash('message', 'Gas request submitted successfully!');
     }
 
-    // public function  updatingQuantity($value)
-    // {
-    //     if ($this->outlet_id && $value > $this->selectedOutletStock) {
-    //         $this->addError('quantity', 'Requested quantity exceeds available stock.');
-    //     } else {
-    //         $this->resetErrorBag('quantity');
-    //     }
-    // }
+    public function createToken(GasRequest $gasRequest)
+    {
+
+        $outlet = Outlet::find($gasRequest->outlet_id);
+
+        if ($outlet && $outlet->stock >= $gasRequest->quantity) {
+
+            $tokenNumber = Str::uuid();
+
+            // Create the token
+            $token = Token::create([
+                'user_id' =>  auth()->id(),
+                'gas_request_id' => $gasRequest->id,
+                'token_number' => $tokenNumber,
+                'status' => 'active',
+            ]);
+
+
+            //$outlet->decrement('stock', $gasRequest->quantity);
+
+
+            Session::flash('warning', "Token generated successfully: $tokenNumber");
+        } else {
+            Session::flash('error', 'No stock available at this outlet.');
+        }
+    }
+
 
     public function render()
     {

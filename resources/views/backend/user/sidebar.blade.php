@@ -10,7 +10,7 @@
                
                 <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'user.gas-requests') ? 'active' : '' }}" href="{{ route('user.gas-requests') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-upload"></i></div>
-                    Gas Requests
+                    My Gas Requests
                 </a>
           
             </div>

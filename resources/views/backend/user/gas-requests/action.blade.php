@@ -4,3 +4,5 @@
         <i class="fa fa-times"></i> Cancel
     </a>
 @endif
+
+<a class="btn btn-primary btn-sm show-token" href="javascript:void(0)" data-id="{{ $gasRequest->id }}">Show Token</a>

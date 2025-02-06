@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class GasRequest extends Model
 {
@@ -12,12 +13,11 @@ class GasRequest extends Model
         'outlet_id',
         'quantity',
         'status',
-        'token',
         'expected_pickup_date',
     ];
 
     protected $casts = [
-        'expected_pickup_date' => 'date', 
+        'expected_pickup_date' => 'date',
     ];
 
     public function user(): BelongsTo
@@ -28,5 +28,10 @@ class GasRequest extends Model
     public function outlet(): BelongsTo
     {
         return $this->belongsTo(Outlet::class);
+    }
+
+    public function token(): HasOne
+    {
+        return $this->hasOne(Token::class, 'gas_request_id');
     }
 }
