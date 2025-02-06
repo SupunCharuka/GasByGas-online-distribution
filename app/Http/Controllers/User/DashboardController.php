@@ -78,4 +78,29 @@ class DashboardController extends Controller
             'icon' => 'success'
         ]);
     }
+
+    public function getToken(GasRequest $gasRequest)
+    {
+        
+        $token = $gasRequest->token;
+
+       
+        if ($token && isset($token->token_number) && isset($token->token_issued_at)) {
+            $statusClasses = [
+                'active' => 'badge badge-success',
+                'expired' => 'badge badge-danger',
+                'used' => 'badge badge-warning',
+            ];
+    
+            $statusClass = $statusClasses[$token->status] ?? 'badge badge-secondary';
+            return response()->json([
+                'success' => true,
+                'token_number' => $token->token_number,
+                'token_issued_at' => $token->token_issued_at->format('d M Y H:i A'),
+                'status' => '<span class="' . $statusClass . '">' . ucfirst($token->status) . '</span>',
+            ]);
+        }
+
+        return response()->json(['success' => false]);
+    }
 }

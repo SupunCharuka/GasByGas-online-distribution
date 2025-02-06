@@ -63,5 +63,27 @@
             });
         });
 
+        $(document).on('click', '.show-token', function() {
+            let requestId = $(this).data('id');
+    
+            $.ajax({
+                url: "/user/gas-requests/token/" + requestId,
+                type: "GET",
+                success: function(response) {
+                    if (response.success) {
+                        $("#tokenNumber").text(response.token_number);
+                        $("#tokenIssuedAt").text(response.token_issued_at);
+                        $("#tokenStatus").html(response.status);
+                        $("#tokenModal").modal("show");
+                    } else {
+                        alert("Token not available.");
+                    }
+                },
+                error: function() {
+                    alert("An error occurred while fetching token details.");
+                }
+            });
+        });
+
     });
 })();

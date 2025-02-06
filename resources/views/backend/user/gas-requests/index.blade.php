@@ -1,14 +1,14 @@
 @extends('backend.layouts.master')
-@section('title', 'Gas Requests')
+@section('title', 'My Gas Requests')
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/datatables/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/datatables/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/datatables/customize-datatables.css') }}">
 @endsection
-@section('breadcrumb-title', 'Gas Requests')
+@section('breadcrumb-title', 'My Gas Requests')
 @section('breadcrumb-items')
     <li class="breadcrumb-item"><a href="{{ route('user.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Gas Requests</li>
+    <li class="breadcrumb-item active">My Gas Requests</li>
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
                 <div class="col-sm-12">
                     <div class="card shadow">
                         <div class="card-header">
-                            <h5>Gas Requests</h5>
+                            <h5>My Gas Requests</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -57,6 +57,24 @@
             </div>
         </div>
     </div>
+
+    {{-- Token Modal --}}
+    <div class="modal fade" id="tokenModal" tabindex="-1" aria-labelledby="tokenModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tokenModalLabel">Gas Request Token</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Token Number:</strong> <span id="tokenNumber"></span></p>
+                    <p><strong>Issued At:</strong> <span id="tokenIssuedAt"></span></p>
+                    <p><strong>Status:</strong> <span id="tokenStatus"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 @section('scripts')

@@ -4,6 +4,11 @@
             {{ Session::get('message') }}
         </div>
     @endif
+    @if (Session::has('warning'))
+        <div class="alert alert-warning" role="alert">
+            {{ Session::get('warning') }}
+        </div>
+    @endif
     @if (Session::has('error'))
         <div class="alert alert-danger" role="alert">
             {{ Session::get('error') }}
@@ -17,12 +22,13 @@
             <form wire:submit.prevent="submitRequest">
                 <div class="px-4 py-4 bg-white sm:p-6">
                     <div class="grid grid-cols-6 gap-6">
-                       
+
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="district_id" value="{{ __('Select District') }}" />
-                            <select wire:model.lazy="district_id" id="district_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <select wire:model.lazy="district_id" id="district_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <option value="">Select District</option>
-                                @foreach($listForFields['districts'] as $district)
+                                @foreach ($listForFields['districts'] as $district)
                                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                                 @endforeach
                             </select>
@@ -35,9 +41,10 @@
 
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="outlet_id" value="{{ __('Select Outlet') }}" />
-                            <select wire:model.lazy="outlet_id" id="outlet_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <select wire:model.lazy="outlet_id" id="outlet_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <option value="">Select Outlet</option>
-                                @foreach($listForFields['outlets'] as $outlet)
+                                @foreach ($listForFields['outlets'] as $outlet)
                                     <option value="{{ $outlet->id }}">{{ $outlet->name }}</option>
                                 @endforeach
                             </select>
@@ -51,19 +58,21 @@
                         <div class="col-span-6 sm:col-span-4">
                             <x-label value="{{ __('Available Stock') }}" />
                             <div class="mt-1 p-2 bg-gray-100 rounded-md">
-                                @if($selectedOutletStock > 0)
-                                    <span class="text-gray-700 font-bold">{{ $selectedOutletStock }} cylinders available</span>
+                                @if ($selectedOutletStock > 0)
+                                    <span class="text-gray-700 font-bold">{{ $selectedOutletStock }} cylinders
+                                        available</span>
                                 @else
                                     <span class="text-red-600 font-bold">Out of Stock</span>
                                 @endif
                             </div>
                         </div>
-                        
 
-                        
+
+
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="quantity" value="{{ __('Quantity') }}" />
-                            <x-input wire:model.lazy="quantity" id="quantity" type="number" class="mt-1 block w-full" min="1" />
+                            <x-input wire:model.lazy="quantity" id="quantity" type="number" class="mt-1 block w-full"
+                                min="1" />
                             @error('quantity')
                                 <p class="text-sm text-red-600">
                                     {{ $message }}
@@ -72,7 +81,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6 sm:rounded-bl-md sm:rounded-br-md">
+                <div
+                    class="flex items-center justify-end px-4 py-3 text-right sm:px-6 sm:rounded-bl-md sm:rounded-br-md">
                     <x-button wire:loading.attr="disabled">
                         {{ __('Submit Request') }}
                     </x-button>
