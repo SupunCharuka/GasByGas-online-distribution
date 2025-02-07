@@ -24,6 +24,11 @@
                             {{ Session::get('message') }}
                         </div>
                     @endif
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('error') }}
+                        </div>
+                    @endif
                     <div class="card shadow">
                         <div class="card-header">
                             <h5>Gas Requests for {{ auth()->user()->outlet->name }}</h5>
@@ -35,6 +40,7 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
+                                            <th>Token</th>
                                             <th>Customer</th>
                                             <th>Quantity</th>
                                             <th>Status</th>
@@ -49,6 +55,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Id</th>
+                                            <th>Token</th>
                                             <th>Customer</th>
                                             <th>Quantity</th>
                                             <th>Status</th>

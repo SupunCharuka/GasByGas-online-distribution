@@ -37,11 +37,10 @@ class Create extends Component
         $rules =  [
             'form.name'    => ['required', 'string', 'max:255'],
             'form.email'     =>  ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'form.nic'     =>  ['required', 'string', 'nic', 'regex:/^[0-9]{9}[vVxX]$|^[0-9]{12}$/', 'unique:users,nic'],
+            'form.nic'     =>  ['required', 'string', 'regex:/^[0-9]{9}[vVxX]$|^[0-9]{12}$/', 'unique:users,nic'],
             'form.password' => $this->passwordRules(),
             'form.role_id' => ['required', 'integer', 'exists:Spatie\Permission\Models\Role,id'],
             'form.phone' => ['required', 'string', 'unique:users,phone', 'phone:' . $this->phone_iso],
-            'form.outlet_id' => ['required', 'integer', 'exists:outlets,id'],
         ];
 
         if ($this->form['role_id'] && Role::find($this->form['role_id'])->name === 'outlet-manager') {
@@ -96,10 +95,9 @@ class Create extends Component
 
     public function save()
     {
+        
         $this->validate();
-        $input = $this->form;
-
-      
+        $input = $this->form;      
         $this->role_id = ['role_id' => $input['role_id']];
         $this->user = DB::transaction(function () use ($input) {
             return tap(User::create([
@@ -108,7 +106,7 @@ class Create extends Component
                 'nic' => $input['nic'],
                 'password' => Hash::make($input['password']),
                 'phone' => $input['phone'],
-                'outlet_id' => $input['outlet_id'] ?? null,
+                'outlet_id' => !empty($input['outlet_id']) ? (int) $input['outlet_id'] : null,
             ]), function (User $user) {
                 $user->roles()->sync($this->role_id);
             });
