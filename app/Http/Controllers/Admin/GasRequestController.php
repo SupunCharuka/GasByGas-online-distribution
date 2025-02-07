@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GasRequest;
 use App\Models\Token;
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -14,17 +15,14 @@ use Illuminate\Support\Str;
 
 class GasRequestController extends Controller
 {
- 
+
     public function index(Request $request)
     {
-
         $user = Auth::user();
 
         if (!$user->outlet_id) {
             abort(403, 'You are not assigned to any outlet.');
         }
-
-  
 
         if ($request->ajax()) {
 
@@ -33,6 +31,9 @@ class GasRequestController extends Controller
             return DataTables::of($gasRequests)
                 ->addColumn('id', function ($row) {
                     return $row->id;
+                })
+                ->addColumn('token', function ($row) {
+                    return $row->token ? 'Issued' : 'Not Issued';
                 })
                 ->addColumn('status', function ($gasRequest) {
                     $statusClasses = [
@@ -59,10 +60,27 @@ class GasRequestController extends Controller
                     return $row->expected_pickup_date ? Carbon::parse($row->expected_pickup_date)->format('Y-m-d') : 'N/A';
                 })
                 ->addColumn('actions', function ($row) {
-                    return '
-                        <button class="btn btn-success btn-sm approve-btn" data-id="' . $row->id . '">Approve</button>
-                        <button class="btn btn-danger btn-sm reject-btn" data-id="' . $row->id . '">Reject</button>
-                    ';
+                    $buttons = '';
+                    if ($row->token) {
+                        $buttons .= '
+                            <a href="' . route('admin.tokens.show', $row->id) . '" class="btn btn-primary btn-sm">View Token</a>
+                        ';
+                    }
+                    if ($row->status == 'pending') {
+                        $buttons .= '
+                            <button class="btn btn-success btn-sm approve-btn" data-id="' . $row->id . '">Approve</button>
+                            <button class="btn btn-danger btn-sm reject-btn" data-id="' . $row->id . '">Reject</button>
+                        ';
+                    } elseif ($row->status == 'accepted') {
+                        $buttons .= '
+                            <button class="btn btn-danger btn-sm reject-btn" data-id="' . $row->id . '">Reject</button>
+                        ';
+                    } elseif ($row->status == 'rejected') {
+                        $buttons .= '
+                           <button class="btn btn-success btn-sm approve-btn" data-id="' . $row->id . '">Approve</button>
+                        ';
+                    }
+                    return $buttons;
                 })
                 ->rawColumns(['actions', 'status'])
                 ->make(true);
@@ -71,25 +89,25 @@ class GasRequestController extends Controller
         return view('backend.admin.gas-requests.index');
     }
 
-    public function updateStatus(Request $request,GasRequest $gasRequest)
+    public function updateStatus(Request $request, GasRequest $gasRequest)
     {
         $gasRequest->status = $request->status;
         $gasRequest->save();
 
         if ($gasRequest->status === 'accepted') {
-          
-            $tokenNumber = Str::uuid(); 
-    
+
+            $tokenNumber = Str::uuid();
+
             // Create a new token
             Token::create([
-                'user_id' => $gasRequest->user_id, 
+                'user_id' => $gasRequest->user_id,
                 'gas_request_id' => $gasRequest->id,
                 'token_number' => $tokenNumber,
-                'token_issued_at' => now(), 
+                'token_issued_at' => now(),
                 'status' => 'active',
             ]);
+            return response()->json(['message' => 'Status updated and token generated successfully!']);
         }
-
-        return response()->json(['message' => 'Status updated and token generated successfully!']);
+        return response()->json(['message' => 'Status updated!']);
     }
 }

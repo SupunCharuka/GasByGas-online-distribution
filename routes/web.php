@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ManageUserController;
 use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,10 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
     //Gas Request
     Route::middleware(['role:outlet-manager'])->group(function () {
         Route::get('gas-requests', [GasRequestController::class, 'index'])->name('gas-requests');
+        Route::get('gas-requests/tokens/{gasRequest}', [TokenController::class, 'showToken'])->name('tokens.show');
+        Route::post('gas-requests/tokens/{token}/mark-used', [TokenController::class, 'markUsed'])->name('tokens.markUsed');
+        Route::post('gas-requests/tokens/{token}/reallocate', [TokenController::class, 'reallocate'])->name('tokens.reallocate');
+
     });
     Route::post('gas-requests/update-status/{gasRequest}', [GasRequestController::class, 'updateStatus'])->name('gas-requests.update-status');
 });

@@ -11,6 +11,7 @@
             ajax: location.href,
             columns: [
                 { data: "id", name: 'id', searchable: true },
+                { data: "token", name: 'token', searchable: true },
                 { data: "customer", name: 'customer', searchable: true, orderable: false },
                 { data: "quantity", name: 'quantity', searchable: true, orderable: false },
                 { data: "status", name: 'status', searchable: true, orderable: false },
