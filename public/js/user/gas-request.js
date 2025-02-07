@@ -74,6 +74,11 @@
                         $("#tokenNumber").text(response.token_number);
                         $("#tokenIssuedAt").text(response.token_issued_at);
                         $("#tokenStatus").html(response.status);
+                        if (response.status.includes('active')) {
+                            $("#redeemButton").show();
+                        } else {
+                            $("#redeemButton").hide();
+                        }
                         $("#tokenModal").modal("show");
                     } else {
                         alert("Token not available.");
@@ -84,6 +89,8 @@
                 }
             });
         });
+
+        
 
     });
 })();

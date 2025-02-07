@@ -5,4 +5,6 @@
     </a>
 @endif
 
-<a class="btn btn-primary btn-sm show-token" href="javascript:void(0)" data-id="{{ $gasRequest->id }}">Show Token</a>
+@if ($gasRequest->token)
+    <a class="btn btn-primary btn-sm show-token" href="javascript:void(0)" data-id="{{ $gasRequest->id }}">Show Token</a>
+@endif

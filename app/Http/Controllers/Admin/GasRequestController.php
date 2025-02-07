@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GasRequest;
+use App\Models\Token;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class GasRequestController extends Controller
 {
@@ -26,21 +28,17 @@ class GasRequestController extends Controller
 
         if ($request->ajax()) {
 
-            $gasRequests = GasRequest::where('outlet_id', $user->outlet_id)->with('outlet')->select('gas_requests.*');
+            $gasRequests = GasRequest::where('outlet_id', $user->outlet_id)->with('outlet')->latest();
 
             return DataTables::of($gasRequests)
                 ->addColumn('id', function ($row) {
                     return $row->id;
-                })
-                ->addColumn('token', function ($row) {
-                    return $row->token;
                 })
                 ->addColumn('status', function ($gasRequest) {
                     $statusClasses = [
                         'pending' => 'badge badge-warning',
                         'accepted' => 'badge badge-success',
                         'rejected' => 'badge badge-danger',
-
                     ];
 
                     $statusText = ucfirst($gasRequest->status);
@@ -51,8 +49,8 @@ class GasRequestController extends Controller
                 ->addColumn('quantity', function ($row) {
                     return $row->quantity;
                 })
-                ->addColumn('outlet', function ($row) {
-                    return $row->outlet ? $row->outlet->name : 'N/A';
+                ->addColumn('customer', function ($row) {
+                    return $row->user ? $row->user->name : 'N/A';
                 })
                 ->addColumn('created_at', function ($row) {
                     return $row->created_at ? Carbon::parse($row->created_at)->format('Y-m-d') : 'N/A';
@@ -78,6 +76,20 @@ class GasRequestController extends Controller
         $gasRequest->status = $request->status;
         $gasRequest->save();
 
-        return response()->json(['message' => 'Status updated successfully!']);
+        if ($gasRequest->status === 'accepted') {
+          
+            $tokenNumber = Str::uuid(); 
+    
+            // Create a new token
+            Token::create([
+                'user_id' => $gasRequest->user_id, 
+                'gas_request_id' => $gasRequest->id,
+                'token_number' => $tokenNumber,
+                'token_issued_at' => now(), 
+                'status' => 'active',
+            ]);
+        }
+
+        return response()->json(['message' => 'Status updated and token generated successfully!']);
     }
 }

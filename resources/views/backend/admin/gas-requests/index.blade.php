@@ -35,8 +35,7 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Token</th>
-                                            <th>Outlet</th>
+                                            <th>Customer</th>
                                             <th>Quantity</th>
                                             <th>Status</th>
                                             <th>Requested At</th>
@@ -50,8 +49,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Token</th>
-                                            <th>Outlet</th>
+                                            <th>Customer</th>
                                             <th>Quantity</th>
                                             <th>Status</th>
                                             <th>Requested At</th>

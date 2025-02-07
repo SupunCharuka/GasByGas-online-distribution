@@ -67,7 +67,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Token Number:</strong> <span id="tokenNumber"></span></p>
+                    <p class="mb-0"><strong>Token Number:</strong> <span id="tokenNumber"></span></p>
+                    <p class="font-bold">Please use this token for pickup.</p>
                     <p><strong>Issued At:</strong> <span id="tokenIssuedAt"></span></p>
                     <p><strong>Status:</strong> <span id="tokenStatus"></span></p>
                 </div>
