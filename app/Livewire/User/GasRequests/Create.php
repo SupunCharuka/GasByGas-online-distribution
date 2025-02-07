@@ -74,39 +74,12 @@ class Create extends Component
             'token' => Str::uuid(),
             'expected_pickup_date' => now()->addWeeks(2),
         ]);
-        $this->createToken($gasRequest);
+      
         $this->dispatch('gasRequest-created', gasRequest: $gasRequest);
         $this->reset(['district_id', 'outlet_id', 'quantity']);
 
 
         Session::flash('message', 'Gas request submitted successfully!');
-    }
-
-    public function createToken(GasRequest $gasRequest)
-    {
-
-        $outlet = Outlet::find($gasRequest->outlet_id);
-
-        if ($outlet && $outlet->stock >= $gasRequest->quantity) {
-
-            $tokenNumber = Str::uuid();
-
-            // Create the token
-            $token = Token::create([
-                'user_id' =>  auth()->id(),
-                'gas_request_id' => $gasRequest->id,
-                'token_number' => $tokenNumber,
-                'status' => 'active',
-            ]);
-
-
-            //$outlet->decrement('stock', $gasRequest->quantity);
-
-
-            Session::flash('warning', "Token generated successfully: $tokenNumber");
-        } else {
-            Session::flash('error', 'No stock available at this outlet.');
-        }
     }
 
 

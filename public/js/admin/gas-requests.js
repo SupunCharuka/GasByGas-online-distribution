@@ -11,8 +11,7 @@
             ajax: location.href,
             columns: [
                 { data: "id", name: 'id', searchable: true },
-                { data: "token", name: 'token', searchable: true },
-                { data: "outlet", name: 'outlet', searchable: true, orderable: false },
+                { data: "customer", name: 'customer', searchable: true, orderable: false },
                 { data: "quantity", name: 'quantity', searchable: true, orderable: false },
                 { data: "status", name: 'status', searchable: true, orderable: false },
                 { data: "created_at", name: 'created_at', searchable: true, orderable: false },
@@ -25,8 +24,7 @@
         });
 
         $(document).ready(function () {
-
-
+            
             // Approve Button Click Event
             $(document).on("click", ".approve-btn", function () {
                 let id = $(this).data("id");
@@ -66,7 +64,5 @@
                 });
             }
         });
-
-
     });
 })();
