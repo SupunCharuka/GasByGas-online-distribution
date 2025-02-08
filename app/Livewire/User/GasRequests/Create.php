@@ -81,7 +81,6 @@ class Create extends Component
             'quantity' => $this->quantity,
             'status' => 'pending',
             'token' => Str::uuid(),
-            'expected_pickup_date' => now()->addWeeks(2),
         ]);
 
         $this->dispatch('gasRequest-created', gasRequest: $gasRequest);

@@ -35,6 +35,7 @@
                                             <th>Quantity</th>
                                             <th>Status</th>
                                             <th>Requested At</th>
+                                            <th>Expected Pickup Date</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -47,6 +48,7 @@
                                             <th>Quantity</th>
                                             <th>Status</th>
                                             <th>Requested At</th>
+                                            <th>Expected Pickup Date</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                 </table>
