@@ -97,11 +97,16 @@ class GasRequestController extends Controller
 
         if ($gasRequest->status === 'scheduled') {
 
+            // Deduct stock from the outlet
+            $outlet = $gasRequest->outlet;
+            $outlet->decrement('stock', $gasRequest->quantity);
+
             $tokenNumber = Str::uuid();
 
             $gasRequest->update([
                 'expected_pickup_date' => now()->addWeeks(2),
             ]);
+
 
             // Create a new token
             Token::updateOrCreate(
