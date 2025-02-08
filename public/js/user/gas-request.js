@@ -1,3 +1,4 @@
+
 // Usage: This script is for gas request listing page.
 (() => {
     $(function () {
@@ -17,9 +18,10 @@
                 { data: "quantity", name: "quantity", searchable: true },
                 { data: "status", name: "status", searchable: true },
                 { data: "created_at", name: "created_at", searchable: true },
+                { data: "expected_pickup_at", name: "expected_pickup_at", searchable: true },
                 { data: "actions", searchable: false, orderable: false },
             ],
-            columnDefs: [{ targets: 5, className: "text-center" }],
+            columnDefs: [{ targets: 6, className: "text-center" }],
         });
 
         Livewire.on('gasRequest-created', ({ gasRequest }) => {
@@ -63,13 +65,13 @@
             });
         });
 
-        $(document).on('click', '.show-token', function() {
+        $(document).on('click', '.show-token', function () {
             let requestId = $(this).data('id');
-    
+
             $.ajax({
                 url: "/user/gas-requests/token/" + requestId,
                 type: "GET",
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         $("#tokenNumber").text(response.token_number);
                         $("#tokenIssuedAt").text(response.token_issued_at);
@@ -84,13 +86,13 @@
                         alert("Token not available.");
                     }
                 },
-                error: function() {
+                error: function () {
                     alert("An error occurred while fetching token details.");
                 }
             });
         });
 
-        
+
 
     });
 })();

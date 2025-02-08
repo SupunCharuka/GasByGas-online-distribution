@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\GasRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -41,6 +42,10 @@ class DashboardController extends Controller
                 })
                 ->addColumn('created_at', function ($gasRequest) {
                     return $gasRequest->created_at->format('d M Y');
+                })
+                
+                ->addColumn('expected_pickup_at', function ($gasRequest) {
+                    return $gasRequest->expected_pickup_date ? Carbon::parse($gasRequest->expected_pickup_date)->format('d M Y') : 'N/A';
                 })
                 ->addColumn('actions', function ($gasRequest) {
                     return view('backend.user.gas-requests.action', compact('gasRequest'))->render();

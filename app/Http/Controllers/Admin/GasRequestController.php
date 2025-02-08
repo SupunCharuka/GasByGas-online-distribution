@@ -99,6 +99,10 @@ class GasRequestController extends Controller
 
             $tokenNumber = Str::uuid();
 
+            $gasRequest->update([
+                'expected_pickup_date' => now()->addWeeks(2),
+            ]);
+
             // Create a new token
             Token::updateOrCreate(
                 ['gas_request_id' => $gasRequest->id],
