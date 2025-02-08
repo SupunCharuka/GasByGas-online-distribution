@@ -36,6 +36,7 @@ class TokenController extends Controller
 
         $token->status = 'used';
         $token->save();
+        $token->gasRequest ? $token->gasRequest->update(['status' => 'completed']) : null;
 
 
         return redirect()->route('admin.tokens.show', $token->gas_request_id)
@@ -65,7 +66,7 @@ class TokenController extends Controller
         $token->status = 'active';
         $token->save();
 
-        $newGasRequest->status = 'accepted';
+        $newGasRequest->status = 'scheduled';
         $newGasRequest->save();
 
         return redirect()->route('admin.gas-requests')

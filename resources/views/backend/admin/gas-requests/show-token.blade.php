@@ -51,17 +51,18 @@
                                 </span>
                             </p>
                             <p><strong>Pickup Date:</strong> {{ $gasRequest->expected_pickup_date->format('Y-m-d') }}</p>
-                            @if ($token->status != 'used')
+                            @if ($token->status != 'used' && $token->status != 'expired')
                                 <form action="{{ route('admin.tokens.markUsed', $token->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn btn-warning">Mark as Used</button>
                                 </form>
-
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#reallocateModal">
-                                    Reallocate
-                                </button>
+                                @if ($token->status != 'expired')
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#reallocateModal">
+                                        Reallocate
+                                    </button>
+                                @endif
                             @endif
                             <a href="{{ route('admin.gas-requests') }}" class="btn btn-secondary">Back to
                                 Requests</a>
@@ -88,7 +89,8 @@
                         <select class="form-control" name="new_gas_request_id" required>
                             @foreach ($pendingGasRequests as $request)
                                 <option value="{{ $request->id }}">
-                                    {{ $request->user->name }} (Gas Request ID: {{ $request->id }}) - Qty: {{ $request->quantity }}
+                                    {{ $request->user->name }} (Gas Request ID: {{ $request->id }}) - Qty:
+                                    {{ $request->quantity }}
                                 </option>
                             @endforeach
                         </select>
