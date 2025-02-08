@@ -22,9 +22,9 @@ class DashboardController extends Controller
                 ->addColumn('status', function ($gasRequest) {
                     $statusClasses = [
                         'pending' => 'badge badge-warning',
-                        'accepted' => 'badge badge-success',
-                        'rejected' => 'badge badge-danger',
-
+                        'scheduled' => 'badge badge-primary',
+                        'cancelled' => 'badge badge-danger',
+                        'completed' => 'badge badge-success',
                     ];
 
                     $statusText = ucfirst($gasRequest->status);
@@ -70,10 +70,10 @@ class DashboardController extends Controller
             ], 400);
         }
 
-        $gasRequest->update(['status' => 'rejected']);
+        $gasRequest->update(['status' => 'cancelled']);
 
         return response()->json([
-            'status' => 'rejected',
+            'status' => 'cancelled',
             'message' => 'Gas request has been successfully canceled.',
             'icon' => 'success'
         ]);

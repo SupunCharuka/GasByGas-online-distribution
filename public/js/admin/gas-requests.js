@@ -29,13 +29,13 @@
             // Approve Button Click Event
             $(document).on("click", ".approve-btn", function () {
                 let id = $(this).data("id");
-                changeStatus(id, "accepted");
+                changeStatus(id, "scheduled");
             });
 
             // Reject Button Click Event
             $(document).on("click", ".reject-btn", function () {
                 let id = $(this).data("id");
-                changeStatus(id, "rejected");
+                changeStatus(id, "cancelled");
             });
 
             function changeStatus(id, status) {

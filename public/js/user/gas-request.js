@@ -48,7 +48,7 @@
                         },
                         dataType: "JSON",
                         success: function (response) {
-                            if (response.status === "rejected") {
+                            if (response.status === "cancelled") {
                                 Swal.fire("Cancelled!", response.message, "success");
                                 gasRequest_table.ajax.reload(null, false); // Reload DataTable
                             } else {

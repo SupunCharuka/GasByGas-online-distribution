@@ -38,8 +38,9 @@ class GasRequestController extends Controller
                 ->addColumn('status', function ($gasRequest) {
                     $statusClasses = [
                         'pending' => 'badge badge-warning',
-                        'accepted' => 'badge badge-success',
-                        'rejected' => 'badge badge-danger',
+                        'scheduled' => 'badge badge-primary',
+                        'cancelled' => 'badge badge-danger',
+                        'completed' => 'badge badge-success',
                     ];
 
                     $statusText = ucfirst($gasRequest->status);
@@ -71,11 +72,11 @@ class GasRequestController extends Controller
                             <button class="btn btn-success btn-sm approve-btn" data-id="' . $row->id . '">Approve</button>
                             <button class="btn btn-danger btn-sm reject-btn" data-id="' . $row->id . '">Reject</button>
                         ';
-                    } elseif ($row->status == 'accepted') {
+                    } elseif ($row->status == 'scheduled') {
                         $buttons .= '
                             <button class="btn btn-danger btn-sm reject-btn" data-id="' . $row->id . '">Reject</button>
                         ';
-                    } elseif ($row->status == 'rejected') {
+                    } elseif ($row->status == 'cancelled') {
                         $buttons .= '
                            <button class="btn btn-success btn-sm approve-btn" data-id="' . $row->id . '">Approve</button>
                         ';
@@ -94,18 +95,20 @@ class GasRequestController extends Controller
         $gasRequest->status = $request->status;
         $gasRequest->save();
 
-        if ($gasRequest->status === 'accepted') {
+        if ($gasRequest->status === 'scheduled') {
 
             $tokenNumber = Str::uuid();
 
             // Create a new token
-            Token::create([
-                'user_id' => $gasRequest->user_id,
-                'gas_request_id' => $gasRequest->id,
-                'token_number' => $tokenNumber,
-                'token_issued_at' => now(),
-                'status' => 'active',
-            ]);
+            Token::updateOrCreate(
+                ['gas_request_id' => $gasRequest->id],
+                [
+                    'user_id' => $gasRequest->user_id,
+                    'token_number' => $tokenNumber,
+                    'token_issued_at' => now(),
+                    'status' => 'active',
+                ]
+            );
             return response()->json(['message' => 'Status updated and token generated successfully!']);
         }
         return response()->json(['message' => 'Status updated!']);

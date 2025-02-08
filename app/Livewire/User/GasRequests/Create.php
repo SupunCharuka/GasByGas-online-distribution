@@ -57,7 +57,16 @@ class Create extends Component
     public function submitRequest()
     {
         $this->validate();
+        $userId = auth()->id();
 
+        $existingRequest = GasRequest::where('user_id', $userId)
+            ->whereIn('status', ['pending', 'scheduled'])
+            ->exists(); 
+
+        if ($existingRequest) {
+            Session::flash('error', "You already have an active gas request. Please complete it before submitting a new one.");
+            return;
+        }
 
         $outlet = Outlet::find($this->outlet_id);
         if ($outlet->stock < $this->quantity) {
@@ -67,14 +76,14 @@ class Create extends Component
 
         // Create the gas request
         $gasRequest = GasRequest::create([
-            'user_id' => auth()->id(),
+            'user_id' => $userId,
             'outlet_id' => $this->outlet_id,
             'quantity' => $this->quantity,
             'status' => 'pending',
             'token' => Str::uuid(),
             'expected_pickup_date' => now()->addWeeks(2),
         ]);
-      
+
         $this->dispatch('gasRequest-created', gasRequest: $gasRequest);
         $this->reset(['district_id', 'outlet_id', 'quantity']);
 
