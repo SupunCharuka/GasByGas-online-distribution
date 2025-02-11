@@ -53,12 +53,12 @@
                     },
                     success: function (response) {
                         Swal.fire("Done!", response.message, "success"),
-                            gas_requests_table.ajax.reload();
+                            gas_requests_table.draw();
                     },
-                    error: function (xhr) {
+                    error: function (response) {
                         Swal.fire(
                             "Error!",
-                            "Something went wrong.",
+                            response.responseJSON.message,
                             "error"
                         );
                     },
