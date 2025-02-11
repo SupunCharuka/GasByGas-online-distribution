@@ -51,10 +51,26 @@
                 @role('outlet-manager')
                     <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.gas-requests') ? 'active' : '' }}"
                         href="{{ route('admin.gas-requests') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                         My Gas Requests
                     </a>
+
+                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.tokens') ? 'active' : '' }}"
+                        href="{{ route('admin.tokens') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-th-list"></i></div>
+                        Tokens
+                    </a>
                 @endrole
+
+                @can('tokens')
+                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.tokens') ? 'active' : '' }}"
+                        href="{{ route('admin.tokens') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-th-list"></i></i></div>
+                        Tokens
+                    </a>
+                @endcan
+
+
             </div>
         </div>
 
