@@ -108,8 +108,8 @@ class GasRequestController extends Controller
 
             $gasRequest->update([
                 'expected_pickup_date' => now()->addWeeks(2),
+                'status' => 'scheduled',
             ]);
-
 
             // Create a new token
             Token::updateOrCreate(

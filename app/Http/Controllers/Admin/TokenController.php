@@ -72,4 +72,20 @@ class TokenController extends Controller
         return redirect()->route('admin.gas-requests')
             ->with('message', 'Token reallocated successfully!');
     }
+
+    public function index()
+    {
+        $user = auth()->user();
+
+        if ($user->roles->contains('name', 'outlet-manager')) {
+            $tokens = Token::whereHas('gasRequest', function ($query) use ($user) {
+                $query->where('outlet_id', $user->outlet_id);
+            })->with(['gasRequest.outlet', 'user'])->get();
+        } else {
+
+            $tokens = Token::with(['gasRequest.outlet', 'user'])->get();
+        }
+
+        return view('backend.admin.token.index', compact('tokens'));
+    }
 }

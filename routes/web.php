@@ -50,9 +50,10 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
         Route::get('gas-requests/tokens/{gasRequest}', [TokenController::class, 'showToken'])->name('tokens.show');
         Route::post('gas-requests/tokens/{token}/mark-used', [TokenController::class, 'markUsed'])->name('tokens.markUsed');
         Route::post('gas-requests/tokens/{token}/reallocate', [TokenController::class, 'reallocate'])->name('tokens.reallocate');
-
     });
     Route::post('gas-requests/update-status/{gasRequest}', [GasRequestController::class, 'updateStatus'])->name('gas-requests.update-status');
+
+    Route::get('tokens', [TokenController::class, 'index'])->name('tokens');
 });
 
 
@@ -63,5 +64,4 @@ Route::group(["prefix" => "user", 'middleware' => ['auth:sanctum', config('jetst
     Route::get('my-gas-requests', [UserDashboardController::class, 'gasRequests'])->name('gas-requests');
     Route::post('gas-request/{gasRequest}/cancel', [UserDashboardController::class, 'cancelRequest'])->name('gas-requests.cancel');
     Route::get('gas-requests/token/{gasRequest}', [UserDashboardController::class, 'getToken']);
-
 });
