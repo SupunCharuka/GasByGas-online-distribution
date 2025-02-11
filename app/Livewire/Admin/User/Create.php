@@ -86,7 +86,7 @@ class Create extends Component
 
     public function updated($propertyName)
     {
-        
+
         $this->validateOnly($propertyName);
         if ($propertyName === 'form.outlet_id') {
             $this->selectedOutletDistrict = Outlet::find($this->form['outlet_id'])->district->name ?? null;
@@ -95,9 +95,9 @@ class Create extends Component
 
     public function save()
     {
-        
+
         $this->validate();
-        $input = $this->form;      
+        $input = $this->form;
         $this->role_id = ['role_id' => $input['role_id']];
         $this->user = DB::transaction(function () use ($input) {
             return tap(User::create([
@@ -124,8 +124,11 @@ class Create extends Component
         $this->role = new Role();
         $this->outlet = new Outlet();
 
-       
-        $this->listForFields['outlets'] = Outlet::pluck('name', 'id')->toArray();
+        $assignedOutletIds = User::whereNotNull('outlet_id')->pluck('outlet_id')->toArray();
+
+        $this->listForFields['outlets'] = Outlet::whereNotIn('id', $assignedOutletIds)
+            ->pluck('name', 'id')
+            ->toArray();
     }
     public function render()
     {

@@ -92,13 +92,16 @@ class GasRequestController extends Controller
 
     public function updateStatus(Request $request, GasRequest $gasRequest)
     {
-        $gasRequest->status = $request->status;
-        $gasRequest->save();
 
-        if ($gasRequest->status === 'scheduled') {
+        if ($gasRequest->status === 'pending' || $request->status === 'cancelled') {
+
+            $outlet = $gasRequest->outlet;
+
+            if ($outlet->stock < $gasRequest->quantity) {
+                return response()->json(['message' => 'Insufficient stock in your outlet. Please update the stock or contact the admin.'], 400);
+            }
 
             // Deduct stock from the outlet
-            $outlet = $gasRequest->outlet;
             $outlet->decrement('stock', $gasRequest->quantity);
 
             $tokenNumber = Str::uuid();
@@ -119,7 +122,11 @@ class GasRequestController extends Controller
                 ]
             );
             return response()->json(['message' => 'Status updated and token generated successfully!']);
+        } else {
+            $gasRequest->status = $request->status;
+            $gasRequest->save();
+
+            return response()->json(['message' => 'Status updated!']);
         }
-        return response()->json(['message' => 'Status updated!']);
     }
 }

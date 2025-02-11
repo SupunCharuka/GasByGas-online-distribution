@@ -64,47 +64,50 @@ class Edit extends Component
 
     public function updated($field)
     {
-        
+
         $this->validate();
-    
-        
-        if ($field === 'form.role_id') {
-           
-            if ($this->form['role_id'] && Role::find($this->form['role_id'])->name !== 'outlet-manager') {
-                $this->form['outlet_id'] = null; 
-                $this->selectedOutletDistrict = null; 
-            } elseif ($this->form['role_id'] && Role::find($this->form['role_id'])->name === 'outlet-manager') {
-               
-                $this->listForFields['outlets'] = Outlet::pluck('name', 'id')->toArray();
-            }
-        }
-    
+
+
         if ($field === 'form.outlet_id') {
             $outlet = Outlet::find($this->form['outlet_id']);
             $this->selectedOutletDistrict = $outlet->district->name ?? null;
         }
-       
     }
-    
+
+    public function updatedFormRoleId($value)
+    {
+        if ($value && Role::find($value)->name !== 'outlet-manager') {
+            $this->form['outlet_id'] = null;
+            $this->selectedOutletDistrict = null;
+        } elseif ($value && Role::find($value)->name === 'outlet-manager') {
+            $this->filterAvailableOutlets();
+        }
+    }
+
+
 
     public function save()
     {
         $this->validate();
 
-        $users = User::where('id', $this->user->id)->first();
-        $users->name = $this->form['name'];
-        $users->email = $this->form['email'];
-        $users->nic = $this->form['nic'];
-        $users->phone = $this->form['phone'];
+        $user = User::where('id', $this->user->id)->first();
+        $user->name = $this->form['name'];
+        $user->email = $this->form['email'];
+        $user->nic = $this->form['nic'];
+        $user->phone = $this->form['phone'];
 
         $this->role_id = [$this->form['role_id']];;
-        $users->roles()->sync($this->role_id);
-        $users->update();
+        $user->roles()->sync($this->role_id);
+        $selectedRole = Role::find($this->form['role_id']);
 
-        if ($this->form['role_id'] && Role::find($this->form['role_id'])->name === 'outlet-manager') {
-            $users->outlet_id = $this->form['outlet_id'];
-            $users->save();
+        if ($selectedRole && $selectedRole->name === 'outlet-manager') {
+            $user->outlet_id = $this->form['outlet_id'];
+        } else {
+            $user->outlet_id = null;
         }
+
+
+        $user->save();
 
         session()->flash('message', 'User Updated Successfully!');
         return redirect()->route('admin.manage-user');
@@ -124,8 +127,10 @@ class Edit extends Component
         $this->form['outlet_id'] = $user->outlet_id;
         $this->role = new Role();
 
+        $this->listForFields['outlets'] = [];
+
         if ($this->form['role_id'] && Role::find($this->form['role_id'])->name === 'outlet-manager') {
-            $this->listForFields['outlets'] = Outlet::pluck('name', 'id')->toArray();
+            $this->filterAvailableOutlets();
         }
 
         if ($this->form['outlet_id']) {
@@ -133,6 +138,20 @@ class Edit extends Component
             $this->selectedOutletDistrict = $outlet->district->name ?? null;
         }
     }
+
+    private function filterAvailableOutlets()
+    {
+        $assignedOutletIds = User::whereNotNull('outlet_id')
+            ->where('id', '!=', $this->user->id)
+            ->pluck('outlet_id')
+            ->toArray();
+
+        $this->listForFields['outlets'] = Outlet::whereNotIn('id', $assignedOutletIds)
+            ->pluck('name', 'id')
+            ->toArray();
+    }
+
+
     public function render()
     {
         return view('livewire.admin.user.edit');
