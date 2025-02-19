@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GasRequestController;
 use App\Http\Controllers\Admin\ManageUserController;
 use App\Http\Controllers\Admin\OutletController;
+use App\Http\Controllers\Admin\OutletStockRequestController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TokenController;
@@ -50,10 +51,22 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
         Route::get('gas-requests/tokens/{gasRequest}', [TokenController::class, 'showToken'])->name('tokens.show');
         Route::post('gas-requests/tokens/{token}/mark-used', [TokenController::class, 'markUsed'])->name('tokens.markUsed');
         Route::post('gas-requests/tokens/{token}/reallocate', [TokenController::class, 'reallocate'])->name('tokens.reallocate');
+
+        Route::get('outlet/stock-request', [OutletStockRequestController::class, 'index'])->name('outlet-stock-request');
     });
+    
+   
+
     Route::post('gas-requests/update-status/{gasRequest}', [GasRequestController::class, 'updateStatus'])->name('gas-requests.update-status');
 
     Route::get('tokens', [TokenController::class, 'index'])->name('tokens');
+
+    Route::get('outlet-stock-requests', [OutletStockRequestController::class, 'adminIndex'])->name('stock-request.adminIndex');
+    Route::post('outlet-stock-requests/{outletStockRequest}/complete', [OutletStockRequestController::class, 'complete'])->name('outlet-stock-requests.complete');
+    Route::post('outlet-stock-requests/{outletStockRequest}/approve', [OutletStockRequestController::class, 'approve'])->name('outlet-stock-requests.approve');
+    Route::post('outlet-stock-requests/{outletStockRequest}/reject', [OutletStockRequestController::class, 'reject'])->name('outlet-stock-requests.reject');
+    Route::get('outlet/stock-request/{stockRequest}/edit', [OutletStockRequestController::class, 'edit'])->name('outlet-stock-request.edit');
+
 });
 
 

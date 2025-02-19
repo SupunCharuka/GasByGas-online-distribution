@@ -60,6 +60,12 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-th-list"></i></div>
                         Tokens
                     </a>
+
+                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.outlet-stock-request') ? 'active' : '' }}"
+                        href="{{ route('admin.outlet-stock-request') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Outlet Stock Request
+                    </a>
                 @endrole
 
                 @can('tokens')
@@ -67,6 +73,14 @@
                         href="{{ route('admin.tokens') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-th-list"></i></i></div>
                         Tokens
+                    </a>
+                @endcan
+
+                @can('stock-request.manage')
+                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.stock-request.adminIndex') ? 'active' : '' }}"
+                        href="{{ route('admin.stock-request.adminIndex') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-th-table"></i></i></div>
+                        Stock Requests
                     </a>
                 @endcan
 
