@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GasRequestController;
+use App\Http\Controllers\Admin\ManageBusinessController;
 use App\Http\Controllers\Admin\ManageUserController;
 use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Admin\OutletStockRequestController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\User\BusinessController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,8 +56,6 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
 
         Route::get('outlet/stock-request', [OutletStockRequestController::class, 'index'])->name('outlet-stock-request');
     });
-    
-   
 
     Route::post('gas-requests/update-status/{gasRequest}', [GasRequestController::class, 'updateStatus'])->name('gas-requests.update-status');
 
@@ -67,14 +67,25 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
     Route::post('outlet-stock-requests/{outletStockRequest}/reject', [OutletStockRequestController::class, 'reject'])->name('outlet-stock-requests.reject');
     Route::get('outlet/stock-request/{stockRequest}/edit', [OutletStockRequestController::class, 'edit'])->name('outlet-stock-request.edit');
 
+    Route::get('manage-business', [ManageBusinessController::class, 'index'])->name('manage-business');
+    Route::get('manage-business/{business}/edit', [ManageBusinessController::class, 'edit'])->name('manage-business.edit');
+    Route::put('manage-business/{business}/update', [ManageBusinessController::class, 'update'])->name('manage-business.update');
+    Route::get('manage-business/details/{id}', [ManageBusinessController::class, 'show'])->name('manage-business.show');
+    Route::post('manage-business/{id}/approve', [ManageBusinessController::class, 'approve'])->name('manage-business.approve');
+    Route::post('manage-business/{id}/reject', [ManageBusinessController::class, 'reject'])->name('manage-business.reject');
 });
 
 
 //USER
-Route::group(["prefix" => "user", 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'check_suspended', 'role:user'], "as" => 'user.'], function () {
+Route::group(["prefix" => "user", 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'check_suspended', 'role:user|business', 'business_approved'], "as" => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('my-gas-requests', [UserDashboardController::class, 'gasRequests'])->name('gas-requests');
     Route::post('gas-request/{gasRequest}/cancel', [UserDashboardController::class, 'cancelRequest'])->name('gas-requests.cancel');
     Route::get('gas-requests/token/{gasRequest}', [UserDashboardController::class, 'getToken']);
+});
+
+Route::middleware(['auth:sanctum', 'check_suspended', 'role:business'])->group(function () {
+    Route::get('user/update-business', [BusinessController::class, 'edit'])->name('user.update-business');
+    Route::post('user/update-business', [BusinessController::class, 'update'])->name('user.update-business.save');
 });
