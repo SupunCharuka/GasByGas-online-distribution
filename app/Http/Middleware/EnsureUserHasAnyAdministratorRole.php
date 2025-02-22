@@ -19,7 +19,7 @@ class EnsureUserHasAnyAdministratorRole
         if (auth()->guest()) {
             throw UnauthorizedException::notLoggedIn();
         }
-        $roles = ['user'];
+        $roles = ['user','business'];
         if (auth()->user()->hasRole($roles)) {
             throw UnauthorizedException::forRoles($roles);
         }

@@ -8,6 +8,7 @@
                 <div class="col-lg-4">
 
                     <form wire:submit.prevent="register" class="php-email-form">
+
                         <div>
                             <x-label for="name" value="{{ __('Name') }}" />
                             <x-input wire:model.lazy="state.name" id="name" class="block mt-1 w-full"
@@ -52,6 +53,44 @@
                                 {{ $message }}
                             </p>
                         @enderror
+
+                        <div class="mt-4 flex items-center space-x-2">
+                            <x-checkbox wire:model.lazy="state.is_business" name="is_business" id="is_business" />
+                            <x-label for="is_business" class="ml-2" value="{{ __('Are you a business?') }}" />
+                        </div>
+
+
+                        <!-- Business Fields (only show if 'is_business' is true) -->
+                        @if ($state['is_business'])
+                            <div class="mt-4">
+                                <x-label for="business_name" value="{{ __('Business Name') }}" />
+                                <x-input wire:model.lazy="state.business_name" id="business_name"
+                                    class="block mt-1 w-full" type="text" name="business_name" required />
+                                @error('state.business_name')
+                                    <p class="font-medium text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mt-4">
+                                <x-label for="business_registration_number"
+                                    value="{{ __('Business Registration Number') }}" />
+                                <x-input wire:model.lazy="state.business_registration_number"
+                                    id="business_registration_number" class="block mt-1 w-full" type="text"
+                                    name="business_registration_number" required />
+                                @error('state.business_registration_number')
+                                    <p class="font-medium text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mt-4">
+                                <x-label for="certificate_file" value="{{ __('Certificate File') }}" />
+                                <x-input wire:model.lazy="state.certificate_file" id="certificate_file"
+                                    class="block mt-1 w-full" type="file" name="certificate_file" required />
+                                @error('state.certificate_file')
+                                    <p class="font-medium text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        @endif
 
                         <div class="mt-4">
                             <x-label for="password" value="{{ __('Password') }}" />
@@ -102,6 +141,11 @@
                                         </div>
                                     </div>
                                 </x-label>
+                                @error('state.terms')
+                                    <p class="font-medium text-red-600">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                         @endif
 

@@ -84,6 +84,14 @@
                     </a>
                 @endcan
 
+                @can('business.manage')
+                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.manage-business') ? 'active' : '' }}"
+                        href="{{ route('admin.manage-business') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
+                        Manage Business
+                    </a>
+                @endcan
+
 
             </div>
         </div>

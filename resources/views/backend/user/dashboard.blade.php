@@ -5,115 +5,70 @@
 
 @section('breadcrumb-title', 'Dashboard')
 @section('breadcrumb-items')
-    <li class="breadcrumb-item active">user</li>
+    <li class="breadcrumb-item active">Dashboard</li>
 
 @endsection
 @section('content')
+    <div class="container-fluid">
+        <div class="row">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> {{ session('error') }}
+                </div>
+            @endif
+            @if (session('warning'))
+                <div class="alert alert-warning">
+                    <strong>Warning:</strong> {{ session('warning') }}
+                </div>
+            @endif
+            @if (auth()->user()->hasRole('business'))
 
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Primary Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Business Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Business Name:</strong> {{ auth()->user()->business->business_name }}</p>
+                        <p><strong>Registration Number:</strong>
+                            {{ auth()->user()->business->business_registration_number }}</p>
+                        <p><strong>Status:</strong>
+                            <span
+                                class="badge 
+                                    {{ auth()->user()->business->status == 'approved'
+                                        ? 'bg-success'
+                                        : (auth()->user()->business->status == 'pending'
+                                            ? 'bg-warning'
+                                            : 'bg-danger') }}">
+                                {{ ucfirst(auth()->user()->business->status) }}
+                            </span>
+                        </p>
+
+                        @if (auth()->user()->business->certificate_file)
+                            <p><strong>Certificate File:</strong>
+                                <a href="{{ asset('storage/' . auth()->user()->business->certificate_file) }}"
+                                    target="_blank" class="btn btn-sm btn-primary">
+                                    View Certificate
+                                </a>
+                            </p>
+                        @else
+                            <p class="text-danger">No certificate uploaded.</p>
+                        @endif
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Warning Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">Success Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">Danger Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
+            @endif
+
+
+
         </div>
     </div>
-    
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            DataTable Example
-        </div>
-        <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>$170,750</td>
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                        <td>2009/01/12</td>
-                        <td>$86,000</td>
-                    </tr>
-                    <tr>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-                        <td>2012/03/29</td>
-                        <td>$433,060</td>
-                    </tr>
 
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 
 @endsection
 @section('scripts')
