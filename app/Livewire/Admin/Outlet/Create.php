@@ -54,6 +54,7 @@ class Create extends Component
             'district' => $outlet->district->name, 
             'address' => $outlet->address,
             'contact_number' => $outlet->contact_number,
+            'total_empty_cylinders' => $outlet->total_empty_cylinders,
             'stock' => $outlet->stock,
         ]);
 

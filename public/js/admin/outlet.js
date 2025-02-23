@@ -21,13 +21,14 @@
                     outlet.district,
                     outlet.address,
                     outlet.contact_number,
+                    outlet.total_empty_cylinders,
                     outlet.stock,
                     action_edit + " " + action_delete,
                 ])
                 .node();
 
             added_row.id = "outlet-record-" + outlet.id;
-            added_row.cells[6].classList.add("text-center");
+            added_row.cells[7].classList.add("text-center");
             outlet_table.draw();
             $("html, body").animate({ scrollTop: 0 }, 200);
         });

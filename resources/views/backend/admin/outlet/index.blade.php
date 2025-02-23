@@ -39,6 +39,7 @@
                                             <th>District</th>
                                             <th>Address</th>
                                             <th>Contact Number</th>
+                                            <th>Total Empty Cylinders</th>
                                             <th>Stock</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
@@ -51,6 +52,7 @@
                                                 <td>{{ $outlet->district->name }}</td>
                                                 <td>{{ $outlet->address }}</td>
                                                 <td>{{ $outlet->contact_number }}</td>
+                                                <td>{{ $outlet->total_empty_cylinders }}</td>
                                                 <td>{{ $outlet->stock }}</td>
                                                 <td class="text-center">
                                                     @can('outlet.update')
@@ -78,6 +80,7 @@
                                             <th>District</th>
                                             <th>Address</th>
                                             <th>Contact Number</th>
+                                            <th>Total Empty Cylinders</th>
                                             <th>Stock</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
