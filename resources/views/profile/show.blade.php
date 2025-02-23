@@ -1,8 +1,11 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+<x-backend-layout>
+    @section('title', 'Profile')
+    <x-slot name="breadcrumb_title">
+        Profile Information
+    </x-slot>
+    <x-slot name="breadcrumb_items">
+        <li class="breadcrumb-item">Dashboard</li>
+        <li class="breadcrumb-item active">Profile Information</li>
     </x-slot>
 
     <div>
@@ -42,4 +45,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+    </x-app-layout>

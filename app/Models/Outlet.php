@@ -30,4 +30,9 @@ class Outlet extends Model
     {
         return $this->hasMany(OutletStockRequest::class);
     }
+
+    public function getTotalEmptyCylindersAttribute()
+    {
+        return $this->stockRequests()->sum('empty_cylinders');
+    }
 }
