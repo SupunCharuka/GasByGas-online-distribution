@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Outlet;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +33,7 @@ class OutletController extends Controller
             $json['icon'] = 'error';
             return response()->json($json, 404);
         }
+        User::where('outlet_id', $outlet->id)->update(['outlet_id' => null]);
         $outlet->delete();
         $json['status'] = 'deleted';
         $json['message'] = 'outlet record deleted successfully';

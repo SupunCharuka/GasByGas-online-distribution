@@ -1,119 +1,135 @@
 @extends('backend.layouts.master')
-@section('title', 'Admin')
+@section('title', auth()->user()->getRoleNames()->first() ?? 'Admin')
 @section('styles')
 @endsection
 
 @section('breadcrumb-title', 'Dashboard')
 @section('breadcrumb-items')
-    <li class="breadcrumb-item active">Admin</li>
-
+    <li class="breadcrumb-item active">Dashboard</li>
 @endsection
 @section('content')
 
     <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Primary Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Warning Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">Success Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">Danger Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            DataTable Example
-        </div>
-        <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>$170,750</td>
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                        <td>2009/01/12</td>
-                        <td>$86,000</td>
-                    </tr>
-                    <tr>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-                        <td>2012/03/29</td>
-                        <td>$433,060</td>
-                    </tr>
 
-                </tbody>
-            </table>
-        </div>
+        @if (!auth()->user()->hasRole('outlet-manager'))
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-warning text-white mb-4">
+                    <div class="card-body">
+                        <h5>Customers</h5>
+                        <p class="fs-3 fw-bold">{{ $customerCount }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-danger text-white mb-4">
+                    <div class="card-body">
+                        <h5>Businesses</h5>
+                        <p class="fs-3 fw-bold">{{ $businessCount }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                    <div class="card-body">
+                        <h5>Outlet Managers</h5>
+                        <p class="fs-3 fw-bold">{{ $outletManagerCount }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-info text-white mb-4">
+                    <div class="card-body">
+                        <h5>Outlets</h5>
+                        <p class="fs-3 fw-bold">{{ $outletCount }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-secondary text-white mb-4">
+                    <div class="card-body">
+                        <h5>Tokens</h5>
+                        <p class="fs-3 fw-bold">{{ $tokenCount }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h5>Stock Requests</h5>
+                        <p class="fs-3 fw-bold">{{ $stockRequestCount }}</p>
+                    </div>
+
+                </div>
+            </div>
+        @else
+            @if (auth()->user()->outlet)
+                <div class="row">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card bg-info text-white mb-4">
+                            <div class="card-body">
+                                <h5>Outlet Details</h5>
+                                <p><strong>Name:</strong> {{ $outlet->name }}</p>
+                                <p><strong>District:</strong> {{ $outlet->district->name ?? 'N/A' }}</p>
+                                <p><strong>Phone Number:</strong> {{ $outlet->contact_number ?? 'N/A' }}</p>
+                                <p><strong>Address:</strong> {{ $outlet->address ?? 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="row">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card bg-dark text-white mb-4">
+                            <div class="card-body">
+                                <h5>Outlet Details</h5>
+                                <p><strong>Status:</strong> Not assigned to any outlet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h5>Gas Requests</h5>
+                        <p class="fs-3 fw-bold">{{ $gasRequestCount }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-secondary text-white mb-4">
+                    <div class="card-body">
+                        <h5>Tokens</h5>
+                        <p class="fs-3 fw-bold">{{ $tokenCount }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-danger text-white mb-4">
+                    <div class="card-body">
+                        <h5>Stock</h5>
+                        <p class="fs-3 fw-bold">{{ $outlet->stock ?? 0 }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+        @endif
     </div>
+
+
 
 @endsection
 @section('scripts')

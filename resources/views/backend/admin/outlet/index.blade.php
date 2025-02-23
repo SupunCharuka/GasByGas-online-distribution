@@ -41,6 +41,7 @@
                                             <th>Contact Number</th>
                                             <th>Total Empty Cylinders</th>
                                             <th>Stock</th>
+                                            <th>Assigned Outlet Manager</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -54,6 +55,13 @@
                                                 <td>{{ $outlet->contact_number }}</td>
                                                 <td>{{ $outlet->total_empty_cylinders }}</td>
                                                 <td>{{ $outlet->stock }}</td>
+                                                <td>
+                                                    @if ($outlet->users->isNotEmpty())
+                                                        <span class="badge bg-success">Assigned</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Not Assigned</span>
+                                                    @endif
+                                                </td>
                                                 <td class="text-center">
                                                     @can('outlet.update')
                                                         <a class="btn btn-sm btn-primary"
@@ -82,6 +90,7 @@
                                             <th>Contact Number</th>
                                             <th>Total Empty Cylinders</th>
                                             <th>Stock</th>
+                                            <th>Assigned Outlet Manager</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </tfoot>
