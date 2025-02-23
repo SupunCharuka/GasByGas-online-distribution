@@ -56,6 +56,7 @@ class Create extends Component
             'contact_number' => $outlet->contact_number,
             'total_empty_cylinders' => $outlet->total_empty_cylinders,
             'stock' => $outlet->stock,
+            'assigned' => $outlet->users->isNotEmpty(),
         ]);
 
         $this->reset(['name', 'district_id', 'address', 'contact_number', 'stock']);

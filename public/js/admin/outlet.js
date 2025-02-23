@@ -3,8 +3,10 @@
         let outlet_table = $("#outlets").DataTable();
 
         Livewire.on('outlet-created', ({ outlet }) => {
-           
-            
+            let assigned_status = outlet.assigned
+                ? '<span class="badge bg-success">Assigned</span>'
+                : '<span class="badge bg-danger">Not Assigned</span>';
+
             let action_edit = `<a class="btn btn-sm btn-primary"
                         href="${APP_URL}/admin/outlet/${outlet.id}/edit">
                         <i class="fa fa-pencil"></i>
@@ -23,12 +25,13 @@
                     outlet.contact_number,
                     outlet.total_empty_cylinders,
                     outlet.stock,
+                    assigned_status,
                     action_edit + " " + action_delete,
                 ])
                 .node();
 
             added_row.id = "outlet-record-" + outlet.id;
-            added_row.cells[7].classList.add("text-center");
+            added_row.cells[8].classList.add("text-center");
             outlet_table.draw();
             $("html, body").animate({ scrollTop: 0 }, 200);
         });
@@ -63,13 +66,13 @@
                                     outlet_table
                                         .rows(
                                             "#outlet-record-" +
-                                                outlet_id
+                                            outlet_id
                                         )
                                         .remove()
                                         .draw();
                             else console.error(response.message);
                         },
-                        error: function(response) {
+                        error: function (response) {
                             Swal.fire("Error!", 'Something went wrong.', "error");
                         }
                     });
