@@ -10,6 +10,9 @@
 @section('content')
 
     <div class="row">
+        @if (Auth::check())
+            <h2 class="text-xl font-bold">Welcome, {{ Auth::user()->name }}!</h2>
+        @endif
 
         @if (!auth()->user()->hasRole('outlet-manager'))
             <div class="col-xl-3 col-md-6">

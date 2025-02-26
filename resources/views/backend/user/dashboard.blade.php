@@ -26,6 +26,10 @@
                     <strong>Warning:</strong> {{ session('warning') }}
                 </div>
             @endif
+            @if (Auth::check())
+                <h2 class="text-xl font-bold">Welcome, {{ Auth::user()->name }}!</h2>
+            @endif
+
             @if (auth()->user()->hasRole('business'))
 
 
