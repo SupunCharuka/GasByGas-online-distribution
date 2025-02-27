@@ -4,12 +4,12 @@
         <a href="{{ route('/') }}" class="logo d-flex align-items-center me-auto">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.png" alt=""> -->
-            <h1 class="sitename">Sailor</h1>
+            <h1 class="sitename">GasByGas</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="{{ route('/') }}" class="{{ Str::contains(Route::currentRouteName(), '/') ? 'active' : '' }}">Home</a></li>
                 <li class="dropdown"><a href="about.html"><span>About</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
