@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GasRequestController;
 use App\Http\Controllers\Admin\ManageBusinessController;
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 // Home page
 Route::get('', [PublicController::class, 'index'])->name('/');
+Route::get('/about-us', [PublicController::class, 'aboutUs'])->name('aboutUs');
+Route::get('/branches', [PublicController::class, 'branches'])->name('branches');
+Route::get('/contact-us', [PublicController::class, 'contactUs'])->name('contactUs');
 
 //ADMIN
 Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'check_suspended', 'has_any_admin_role'], "as" => 'admin.'], function () {
@@ -73,6 +77,8 @@ Route::group(["prefix" => "admin", 'middleware' => ['auth:sanctum', config('jets
     Route::get('manage-business/details/{id}', [ManageBusinessController::class, 'show'])->name('manage-business.show');
     Route::post('manage-business/{id}/approve', [ManageBusinessController::class, 'approve'])->name('manage-business.approve');
     Route::post('manage-business/{id}/reject', [ManageBusinessController::class, 'reject'])->name('manage-business.reject');
+
+    Route::get('contact-us', [ContactController::class, 'index'])->name('contact-us');
 });
 
 

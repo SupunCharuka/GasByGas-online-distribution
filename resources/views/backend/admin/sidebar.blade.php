@@ -93,6 +93,15 @@
                     </a>
                 @endcan
 
+                @can('caontact-us.manage')
+                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.contact-us') ? 'active' : '' }}"
+                        href="{{ route('admin.contact-us') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></i></div>
+                        Contact Us
+                    </a>
+                @endcan
+       
+
 
 
             </div>
