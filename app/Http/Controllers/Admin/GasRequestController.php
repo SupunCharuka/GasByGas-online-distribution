@@ -51,6 +51,9 @@ class GasRequestController extends Controller
                 ->addColumn('quantity', function ($row) {
                     return $row->quantity;
                 })
+                ->addColumn('gas_size', function ($row) {
+                    return $row->gas_size;
+                })
                 ->addColumn('customer', function ($row) {
                     return $row->user ? $row->user->name : 'N/A';
                 })

@@ -40,6 +40,9 @@ class DashboardController extends Controller
                 ->addColumn('quantity', function ($gasRequest) {
                     return $gasRequest->quantity;
                 })
+                ->addColumn('gas_size', function ($gasRequest) {
+                    return $gasRequest->gas_size;
+                })
                 ->addColumn('created_at', function ($gasRequest) {
                     return $gasRequest->created_at->format('d M Y');
                 })
