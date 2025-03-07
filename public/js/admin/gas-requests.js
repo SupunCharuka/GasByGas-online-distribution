@@ -14,6 +14,7 @@
                 { data: "token", name: 'token', searchable: true },
                 { data: "customer", name: 'customer', searchable: true, orderable: false },
                 { data: "quantity", name: 'quantity', searchable: true, orderable: false },
+                { data: "gas_size", name: 'gas_size', searchable: true, orderable: false },
                 { data: "status", name: 'status', searchable: true, orderable: false },
                 { data: "created_at", name: 'created_at', searchable: true, orderable: false },
                 { data: "expected_pickup_date", name: 'expected_pickup_date', searchable: false, orderable: false },

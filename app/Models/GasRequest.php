@@ -14,6 +14,7 @@ class GasRequest extends Model
         'quantity',
         'status',
         'expected_pickup_date',
+        'gas_size',
     ];
 
     protected $casts = [

@@ -33,6 +33,7 @@
                                             <th>Id</th>
                                             <th>Outlet</th>
                                             <th>Quantity</th>
+                                            <th>Gas Size</th>
                                             <th>Status</th>
                                             <th>Requested At</th>
                                             <th>Expected Pickup Date</th>
@@ -46,6 +47,7 @@
                                             <th>Id</th>
                                             <th>Outlet</th>
                                             <th>Quantity</th>
+                                            <th>Gas Size</th>
                                             <th>Status</th>
                                             <th>Requested At</th>
                                             <th>Expected Pickup Date</th>

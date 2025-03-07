@@ -16,6 +16,7 @@
                 { data: "id", name: "id", searchable: true },
                 { data: "outlet", name: "outlet", searchable: true },
                 { data: "quantity", name: "quantity", searchable: true },
+                { data: "gas_size", name: "gas_size", searchable: true },
                 { data: "status", name: "status", searchable: true },
                 { data: "created_at", name: "created_at", searchable: true },
                 { data: "expected_pickup_at", name: "expected_pickup_at", searchable: true },

@@ -43,6 +43,7 @@
                                             <th>Token</th>
                                             <th>Customer</th>
                                             <th>Quantity</th>
+                                            <th>Gas Size</th>
                                             <th>Status</th>
                                             <th>Requested At</th>
                                             <th>Expected Pickup Date</th>
@@ -58,6 +59,7 @@
                                             <th>Token</th>
                                             <th>Customer</th>
                                             <th>Quantity</th>
+                                            <th>Gas Size</th>
                                             <th>Status</th>
                                             <th>Requested At</th>
                                             <th>Expected Pickup Date</th>

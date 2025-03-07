@@ -15,21 +15,29 @@ class Create extends Component
     public $outlet_id;
     public $district_id;
     public $quantity;
+    public $gas_size; 
     public $selectedOutletStock = 0;
     public $districts;
     public array $listForFields = [];
+
+    public array $gasSizes = [
+        '12.5kg' => '12.5 KG',
+        '5kg' => '5 KG',
+        '2.3kg' => '2.3 KG',
+    ];
 
     protected $rules = [
         'district_id' => 'required|exists:districts,id',
         'outlet_id' => 'required|exists:outlets,id',
         'quantity' => 'required|integer|min:1',
+        'gas_size' => 'required',
     ];
 
     protected $validationAttributes = [
         'district_id' => 'district',
         'outlet_id' => 'outlet',
         'quantity' => 'quantity',
-
+        'gas_size' => 'gas size',
     ];
 
     public function mount()
@@ -79,6 +87,7 @@ class Create extends Component
             'user_id' => $userId,
             'outlet_id' => $this->outlet_id,
             'quantity' => $this->quantity,
+            'gas_size' => $this->gas_size,
             'status' => 'pending',
             'token' => Str::uuid(),
         ]);

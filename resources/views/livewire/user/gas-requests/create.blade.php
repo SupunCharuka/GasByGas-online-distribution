@@ -56,6 +56,21 @@
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
+                            <x-label for="gas_size" value="{{ __('Select Gas Size') }}" />
+                            <select wire:model.lazy="gas_size" id="gas_size"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option value="">Select Gas Size</option>
+                                @foreach ($gasSizes as $key => $size)
+                                    <option value="{{ $key }}">{{ $size }}</option>
+                                @endforeach
+                            </select>
+                            @error('gas_size')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
+                        <div class="col-span-6 sm:col-span-4">
                             <x-label value="{{ __('Available Stock') }}" />
                             <div class="mt-1 p-2 bg-gray-100 rounded-md">
                                 @if ($selectedOutletStock > 0)
