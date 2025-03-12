@@ -2,10 +2,12 @@
 
 namespace App\Livewire\User\GasRequests;
 
+use App\Mail\GasRequestCreated;
 use App\Models\District;
 use App\Models\GasRequest;
 use App\Models\Outlet;
 use App\Models\Token;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -15,7 +17,7 @@ class Create extends Component
     public $outlet_id;
     public $district_id;
     public $quantity;
-    public $gas_size; 
+    public $gas_size;
     public $selectedOutletStock = 0;
     public $districts;
     public array $listForFields = [];
@@ -69,7 +71,7 @@ class Create extends Component
 
         $existingRequest = GasRequest::where('user_id', $userId)
             ->whereIn('status', ['pending', 'scheduled'])
-            ->exists(); 
+            ->exists();
 
         if ($existingRequest) {
             Session::flash('error', "You already have an active gas request. Please complete it before submitting a new one.");
@@ -89,8 +91,18 @@ class Create extends Component
             'quantity' => $this->quantity,
             'gas_size' => $this->gas_size,
             'status' => 'pending',
-            'token' => Str::uuid(),
+
         ]);
+
+        // Find the Outlet Manager
+        $outletManager = $outlet->users()->whereHas('roles', function ($query) {
+            $query->where('name', 'outlet-manager');
+        })->first();
+
+        // Send email notification to the Outlet Manager
+        if ($outletManager) {
+            Mail::to($outletManager->email)->send(new GasRequestCreated($gasRequest));
+        }
 
         $this->dispatch('gasRequest-created', gasRequest: $gasRequest);
         $this->reset(['district_id', 'outlet_id', 'quantity']);

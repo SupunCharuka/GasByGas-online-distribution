@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\GasRequestStatusUpdated;
 use App\Models\GasRequest;
 use App\Models\Token;
 use App\Models\User;
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 
@@ -124,11 +126,13 @@ class GasRequestController extends Controller
                     'status' => 'active',
                 ]
             );
+
+            Mail::to($gasRequest->user->email)->send(new GasRequestStatusUpdated($gasRequest)); 
             return response()->json(['message' => 'Status updated and token generated successfully!']);
         } else {
             $gasRequest->status = $request->status;
             $gasRequest->save();
-
+            Mail::to($gasRequest->user->email)->send(new GasRequestStatusUpdated($gasRequest));
             return response()->json(['message' => 'Status updated!']);
         }
     }
